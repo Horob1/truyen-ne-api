@@ -53,6 +53,10 @@ const userSchema = new mongoose.Schema(
         message: 'Passwords are not same!',
       },
     },
+    createTime: {
+        type: Date,
+        default: Date.now()
+    }
   },
   {
     toJSON: { virtuals: true },

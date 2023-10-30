@@ -6,23 +6,44 @@ const novelSchema = new mongoose.Schema(
       type: String,
       required: [True, 'Novel must have a name!'],
     },
-    description: String,
-    createDate: Date,
-    debutName: Date,
+    description: {
+      type: String,
+      default: 'Chưa có mô tả!',
+    },
+    createTime: {
+      type: Date,
+      default: Date.now(),
+    },
+    debutDate: Date,
     status: {
-        type: String,
-        enum: ['Bỏ dở', 'Chưa hoàn thành', 'Hoàn thành'],
-        default: 'Chưa hoàn thành'
+      type: String,
+      enum: ['Bỏ dở', 'Chưa hoàn thành', 'Hoàn thành'],
+      default: 'Chưa hoàn thành',
     },
     chapterNum: {
-        type: Number,
-        default: 0
+      type: Number,
+      default: 0,
     },
     photo: {
       type: String,
       default: '',
     },
     translator: { type: mongoose.Schema.ObjectId, ref: 'User' },
+    author: { type: mongoose.Schema.ObjectId, ref: 'Author' },
+    categories: [{ type: mongoose.Schema.ObjectId, ref: 'Category' }],
+    reviews: [{ type: mongoose.Schema.ObjectId, ref: 'Review' }],
+    rateAvg: {
+      type: Number,
+      default: 0,
+    },
+    watch: {
+      type: Number,
+      default: 0,
+    },
+    love: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     toJSON: { virtuals: true },
@@ -31,7 +52,5 @@ const novelSchema = new mongoose.Schema(
 );
 
 const Novel = mongoose.model('Novel', novelSchema);
-
-novelSchema.pre(/^find/, populateMW(next, 'translator', 'avatar, firsrName'));
 
 export default Novel;
