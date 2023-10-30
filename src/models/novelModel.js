@@ -20,7 +20,7 @@ const novelSchema = new mongoose.Schema(
       enum: ['Bỏ dở', 'Chưa hoàn thành', 'Hoàn thành'],
       default: 'Chưa hoàn thành',
     },
-    chapterNum: {
+    progress: {
       type: Number,
       default: 0,
     },
