@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "run-dev": " nodemon ./src/server.js",
-    "run-prod": "NODE_ENV=PRODUCTION nodemon ./src/server.js"
+    "dev": " nodemon ./src/server.js",
+    "prod": "NODE_ENV=PRODUCTION nodemon ./src/server.js"
   },
   "author": "",
   "license": "ISC",
