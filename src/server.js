@@ -3,7 +3,7 @@ import app from './app.js';
 import mongoose from 'mongoose';
 
 // set environment variable
-dotenv.config({ path: './config.js' });
+dotenv.config({ path: './src/config.env' });
 
 // connect database
 const DB = process.env.DATABASE.replace(
@@ -13,10 +13,9 @@ const DB = process.env.DATABASE.replace(
 
 mongoose.connect(DB, {
   useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
   useUnifiedTopology: true,
 });
+
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
   if (process.env.NODE_ENV === 'development') {
