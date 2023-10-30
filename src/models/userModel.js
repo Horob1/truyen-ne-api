@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
+import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema(
   {
@@ -9,7 +10,7 @@ const userSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
-    firsrName: {
+    firstName: {
       type: String,
       required: [true, 'Please tell us your first name!'],
       trim: true,
@@ -64,6 +65,18 @@ const userSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+
+userSchema.pre('save', async function(next) {
+  try {
+    if (!this.isModified('password')) return next();
+
+    this.password = await bcrypt.hash(this.password, 12);
+    this.passwordConfirm = undefined;
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 const User = mongoose.model('User', userSchema);
 
