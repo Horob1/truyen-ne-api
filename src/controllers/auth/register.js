@@ -1,9 +1,7 @@
-import User from '../../models/userModel.js';
-import catchAsync from '../../utils/catchAsync';
-import generateAccessToken from './generateAccessToken.js';
-import generateRefreshToken from './generateRefreshToken.js';
+import User from "../../models/userModel.js";
+import catchAsync from "../../utils/catchAsync.js";
 
-const register = catchAsync(async (req, res, next) => {
+export const registerUser = catchAsync(async (req, res, next) => {
   const { username, firstName, lastName, email, password, passwordConfirm } =
     req.body;
 
@@ -17,7 +15,7 @@ const register = catchAsync(async (req, res, next) => {
   });
 
   res.status(201).json({
-    status: 'Registration Successful',
+    status: "Registration Successful",
     data: {
       user,
     },
