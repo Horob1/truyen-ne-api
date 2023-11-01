@@ -6,6 +6,10 @@ const chapterSchema = new mongoose.Schema(
       type: String,
       required: [true, 'This chapter must have a name!'],
     },
+    number: {
+      type: Number,
+      required: [true, 'This chapter must have a number!'],
+    },
     content: {
       type: String,
       required: [true, 'his chapter must have content!'],

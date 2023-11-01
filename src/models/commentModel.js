@@ -4,6 +4,7 @@ const commentSchema = new mongoose.Schema(
   {
     content: String,
     user: { type: mongoose.Schema.ObjectId, ref: 'User' },
+    forum: {type: mongoose.Schema.ObjectId, ref: 'Forum'},
     chapter: { type: mongoose.Schema.ObjectId, ref: 'Chapter' },
     createTime: {
       type: Date,
