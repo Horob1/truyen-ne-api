@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import validator from "validator";
-import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema(
   {
@@ -42,12 +41,13 @@ const userSchema = new mongoose.Schema(
       select: false,
       validate: [
         validator.isStrongPassword,
-        "minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1!",
+        "minLength: 8, maxLength: 16,minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1!",
       ],
     },
     passwordConfirm: {
       type: String,
       minlength: 8,
+      maxlength: 16,
       validate: {
         validator: function (el) {
           return el === this.password;
@@ -65,18 +65,6 @@ const userSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
-
-userSchema.pre("save", async function (next) {
-  try {
-    if (!this.isModified("password")) return next();
-
-    this.password = await bcrypt.hash(this.password, 12);
-    this.passwordConfirm = undefined;
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
 
 const User = mongoose.model("User", userSchema);
 
