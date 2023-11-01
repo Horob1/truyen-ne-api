@@ -42,12 +42,13 @@ const userSchema = new mongoose.Schema(
       select: false,
       validate: [
         validator.isStrongPassword,
-        "minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1!",
+        "minLength: 8, maxLength: 16,minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1!",
       ],
     },
     passwordConfirm: {
       type: String,
       minlength: 8,
+      maxlength: 16,
       validate: {
         validator: function (el) {
           return el === this.password;

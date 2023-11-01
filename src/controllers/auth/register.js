@@ -1,3 +1,4 @@
+
 import User from '../../models/userModel.js';
 import catchAsync from '../../utils/catchAsync';
 
@@ -17,6 +18,8 @@ const register = catchAsync(async (req, res, next) => {
   await user.save();
 
   res.status(201).json({
+
     status: 'Registration Successful',
+
   });
 });
