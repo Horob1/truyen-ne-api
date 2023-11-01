@@ -6,13 +6,13 @@ const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      required: [true, 'Please tell us your username!'],
+      required: [true, "Please tell us your username!"],
       unique: true,
       trim: true,
     },
     firstName: {
       type: String,
-      required: [true, 'Please tell us your first name!'],
+      required: [true, "Please tell us your first name!"],
       trim: true,
     },
     lastName: {
@@ -21,28 +21,28 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: [true, 'Please provide your email!'],
+      required: [true, "Please provide your email!"],
       trim: true,
       unique: true,
       lowercase: true,
-      validate: [validator.isEmail, 'Please provide a valid email!'],
+      validate: [validator.isEmail, "Please provide a valid email!"],
     },
     role: {
       type: String,
-      enum: ['user', 'translator', 'admin'],
-      default: 'user',
+      enum: ["user", "translator", "admin"],
+      default: "user",
     },
     avatar: {
       type: String,
-      default: '',
+      default: "",
     },
     password: {
       type: String,
-      required: [true, 'Please provide a password!'],
+      required: [true, "Please provide a password!"],
       select: false,
       validate: [
         validator.isStrongPassword,
-        'minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1!',
+        "minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1!",
       ],
     },
     passwordConfirm: {
@@ -52,13 +52,13 @@ const userSchema = new mongoose.Schema(
         validator: function (el) {
           return el === this.password;
         },
-        message: 'Passwords are not same!',
+        message: "Passwords are not same!",
       },
     },
     createTime: {
-        type: Date,
-        default: Date.now()
-    }
+      type: Date,
+      default: Date.now(),
+    },
   },
   {
     toJSON: { virtuals: true },
@@ -81,5 +81,3 @@ userSchema.pre('save', async function(next) {
 const User = mongoose.model('User', userSchema);
 
 export default User;
-
-
