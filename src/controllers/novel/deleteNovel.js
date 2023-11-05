@@ -10,7 +10,7 @@ export const deleteNovel = async (req, res, next) => {
     const user = await Novel.findById(req.params.novelId).select('translator')
       .translator;
 
-    if (req.user.id != user )
+    if (req.user.id != user)
       return next(new AppError(404, 'Permission denied'));
 
     await Chapter.deleteMany({ novel: req.params.novelId });
