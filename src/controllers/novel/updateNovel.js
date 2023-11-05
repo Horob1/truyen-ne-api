@@ -28,7 +28,7 @@ export const updateNovel = async (req, res, next) => {
       {
         new: true,
         runValidators: true,
-      }
+      },
     );
 
     res.status(201).json({

@@ -17,7 +17,7 @@ const commentSchema = new mongoose.Schema(
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  }
+  },
 );
 
 commentSchema.pre(/^find/, function (next) {
