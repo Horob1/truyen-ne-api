@@ -8,7 +8,7 @@ const chapterSchema = new mongoose.Schema(
     },
     number: {
       type: Number,
-      required: [true, 'This chapter must have a number!'],
+      required: true,
     },
     content: {
       type: String,
@@ -22,7 +22,7 @@ const chapterSchema = new mongoose.Schema(
     translator: { type: mongoose.Schema.ObjectId, ref: 'User' },
     createTime: {
       type: Date,
-      default: Date.now(),
+      default: Date.now,
     },
   },
   {
