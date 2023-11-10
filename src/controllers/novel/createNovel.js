@@ -1,14 +1,16 @@
 import Novel from '../../models/novelModel.js';
 
-module.export = async (req, res, next) => {
+export const createNovel = async (req, res, next) => {
   try {
-    const { name, description, debutDate, photo, categories, translator } =
-      req.body;
+
+    const { name, description, debutDate, photo, categories } = req.body;
+
+    const translator = req.user.id;
 
     let author = req.body.author;
     //kiểm tra xem có phải truyện tự sáng tác
     if (req.body.isMine) {
-      author = null;
+      author = undefined;
     }
 
     const newNovel = new Novel({

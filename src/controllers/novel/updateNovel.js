@@ -1,24 +1,28 @@
 import Novel from '../../models/novelModel.js';
 
-module.export = async (req, res, next) => {
+export const updateNovel = async (req, res, next) => {
   try {
-    const { name, description, debutDate, photo, categories, translator } =
-      req.body;
+    const user = await Novel.findById(req.params.novelId).select('translator')
+      .translator;
+
+    if (req.user.id != user )
+      return next(new AppError(404, 'Permission denied'));
+
+    const { name, description, debutDate, photo, categories } = req.body;
 
     let author = req.body.author;
 
     if (req.body.isMine) {
-      author = null;
+      author = undefined;
     }
     const novel = await Novel.findByIdAndUpdate(
-      req.params.id,
+      req.params.novelId,
       {
         name,
         description,
         debutDate,
         photo,
         categories,
-        translator,
         author,
       },
       {
@@ -27,7 +31,7 @@ module.export = async (req, res, next) => {
       }
     );
 
-    res.status(200).json({
+    res.status(201).json({
       status: 'success',
       novel,
     });
