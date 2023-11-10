@@ -8,11 +8,11 @@ const reviewSchema = new mongoose.Schema(
     rate: {
       type: Number,
       enum: [0, 1, 2, 3, 4, 5],
-      default: 0,
+      default: 5,
     },
     createTime: {
       type: Date,
-      default: Date.now(),
+      default: Date.now,
     },
   },
   {
@@ -20,6 +20,15 @@ const reviewSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+
+reviewSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'user',
+    select: 'firstName lastName avatar'
+  });
+
+  next();
+});
 
 const Review = mongoose.model('Review', reviewSchema);
 

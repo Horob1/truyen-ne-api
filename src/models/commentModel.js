@@ -4,11 +4,14 @@ const commentSchema = new mongoose.Schema(
   {
     content: String,
     user: { type: mongoose.Schema.ObjectId, ref: 'User' },
-    forum: {type: mongoose.Schema.ObjectId, ref: 'Forum'},
+    reply: { type: mongoose.Schema.ObjectId, ref: 'Comment' },
+    forum: { type: mongoose.Schema.ObjectId, ref: 'Forum' },
+    novel: { type: mongoose.Schema.ObjectId, ref: 'Novel' },
     chapter: { type: mongoose.Schema.ObjectId, ref: 'Chapter' },
+    isReply: { type: Boolean, default: false },
     createTime: {
       type: Date,
-      default: Date.now(),
+      default: Date.now,
     },
   },
   {
@@ -16,6 +19,15 @@ const commentSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+
+commentSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'user',
+    select: 'firstName lastName avatar'
+  });
+
+  next();
+});
 
 const Comment = mongoose.model('Comment', commentSchema);
 

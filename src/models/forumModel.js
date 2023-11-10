@@ -15,7 +15,7 @@ const forumSchema = new mongoose.Schema(
     chapter: { type: mongoose.Schema.ObjectId, ref: 'Chapter' },
     createTime: {
       type: Date,
-      default: Date.now(),
+      default: Date.now,
     },
     isClose: {
       type: Boolean,
