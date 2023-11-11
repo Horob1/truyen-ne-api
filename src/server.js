@@ -15,6 +15,13 @@ mongoose.connect(DB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+mongoose.connection.on("connected", () => {
+  console.log("Connected to database");
+});
+
+mongoose.connection.on("error", (err) => {
+  console.error("Connect fail:", err);
+});
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {

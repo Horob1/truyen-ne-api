@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 export const generateRefreshToken = (user) => {
   return jwt.sign(
     {
-      user: user.id,
+      _id: user.id,
       role: user.role,
     },
     process.env.SECRET_REFRESH_TOKEN,
