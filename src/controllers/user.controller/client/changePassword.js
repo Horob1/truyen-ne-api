@@ -1,10 +1,5 @@
-<<<<<<<< HEAD:src/controllers/user.controller/client/changePassword.js
 import User from '../../../models/userModel.js';
 import bcrypt from 'bcrypt';
-========
-import User from "../../models/userModel.js";
-import bcrypt from "bcrypt";
->>>>>>>> 192a31b (module admin and middleware check role, authentication module):src/controllers/client/changePassword.js
 
 export const changePassword = async (req, res) => {
   try {

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const generateAccessToken = (user) => {
+export const generateAccessToken = (user) => {
   return jwt.sign(
     {
       user: user.id,
@@ -12,5 +12,3 @@ const generateAccessToken = (user) => {
     },
   );
 };
-
-export default generateAccessToken;

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const generateRefreshToken = (user) => {
+export const generateRefreshToken = (user) => {
   return jwt.sign(
     {
       user: user.id,
@@ -12,5 +12,3 @@ const generateRefreshToken = (user) => {
     },
   );
 };
-
-export default generateRefreshToken;
