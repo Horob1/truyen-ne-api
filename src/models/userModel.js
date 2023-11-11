@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import validator from 'validator';
-import bcrypt from 'bcrypt';
+import mongoose from "mongoose";
+import validator from "validator";
+import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema(
   {
@@ -39,7 +39,6 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: [true, "Please provide a password!"],
-      select: false,
       validate: [
         validator.isStrongPassword,
         "minLength: 8, maxLength: 16,minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1!",
@@ -67,9 +66,9 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-userSchema.pre('save', async function(next) {
+userSchema.pre("save", async function (next) {
   try {
-    if (!this.isModified('password')) return next();
+    if (!this.isModified("password")) return next();
 
     this.password = await bcrypt.hash(this.password, 12);
     this.passwordConfirm = undefined;
@@ -79,6 +78,4 @@ userSchema.pre('save', async function(next) {
   }
 });
 
-const User = mongoose.model('User', userSchema);
-
-export default User;
+export default mongoose.model("User", userSchema);

@@ -1,25 +1,25 @@
+import User from "../../models/userModel.js";
 
-import User from '../../models/userModel.js';
-import catchAsync from '../../utils/catchAsync';
+export const register = async (req, res) => {
+  try {
+    const { username, firstName, lastName, email, password, passwordConfirm } =
+      req.body;
 
-const register = catchAsync(async (req, res, next) => {
-  const { username, firstName, lastName, email, password, passwordConfirm } =
-    req.body;
+    const user = new User({
+      username,
+      firstName,
+      lastName,
+      email,
+      password,
+      passwordConfirm,
+    });
 
-  const user = new User({
-    username,
-    firstName,
-    lastName,
-    email,
-    password,
-    passwordConfirm,
-  });
+    await user.save();
 
-  await user.save();
-
-  res.status(201).json({
-
-    status: 'Registration Successful',
-
-  });
-});
+    res.status(201).json({
+      status: "Registration Successful",
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};

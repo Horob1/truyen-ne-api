@@ -1,29 +1,29 @@
 <<<<<<< HEAD
 import jwt from 'jsonwebtoken'
 
-const generateAccessToken = (user) => {
+const generateRefreshToken = (user) => {
     return jwt.sign({
         user: user.id,
         role: user.role
-    }, process.env.SECRET_ACCESS_TOKEN,
+    }, process.env.SECRET_REFRESH_TOKEN,
     {
-        expiresIn: '1D'
+        expiresIn: '360D'
     });
 }
 
-export default generateAccessToken;
+export default generateRefreshToken;
 =======
 import jwt from "jsonwebtoken";
 
-export const generateAccessToken = (user) => {
+export const generateRefreshToken = (user) => {
   return jwt.sign(
     {
-      user: user.id,
+      _id: user.id,
       role: user.role,
     },
-    process.env.SECRET_ACCESS_TOKEN,
+    process.env.SECRET_REFRESH_TOKEN,
     {
-      expiresIn: "1D",
+      expiresIn: "360D",
     }
   );
 };
