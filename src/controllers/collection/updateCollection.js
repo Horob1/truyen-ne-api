@@ -6,7 +6,7 @@ export const createCollection = async (req, res, next) => {
       'auth'
     ).auth;
 
-    if (req.user.id != user)
+    if (req.user.id !== user)
       return next(new AppError(404, 'Permission denied'));
 
     const { isLove, chapter } = req.body;

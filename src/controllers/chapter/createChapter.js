@@ -7,7 +7,7 @@ export const createChapter = async (req, res, next) => {
       'translator'
     ).translator;
 
-    if (req.user.id != user)
+    if (req.user.id !== user)
       return next(new AppError(404, 'Permission denied'));
 
     const { name, content, number } = req.body;

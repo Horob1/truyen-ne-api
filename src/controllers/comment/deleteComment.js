@@ -5,7 +5,7 @@ export const deleteComment = async (req, res, next) => {
     const user = await Comment.findById(req.params.commentId).select('user')
       .user;
 
-    if (req.user.id != user)
+    if (req.user.id !== user)
       return next(new AppError(404, 'Permission denied'));
 
     await Comment.findByIdAndDelete(req.params.commentId);

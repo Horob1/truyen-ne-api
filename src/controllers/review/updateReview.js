@@ -5,7 +5,7 @@ export const updateReview = async (req, res, next) => {
   try {
     const oldReview = await Review.findById(req.params.id);
 
-    if (oldReview.user != req.user.id )
+    if (oldReview.user !== req.user.id )
       return next(new AppError(404, 'Permission denied'));
 
     const { content, rate } = req.body;

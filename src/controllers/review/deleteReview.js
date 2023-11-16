@@ -6,7 +6,7 @@ export const deleteReview = async (req, res, next) => {
   try {
     const user = await Review.findById(req.params.reviewId).select('user').user;
 
-    if (req.user.id != user )
+    if (req.user.id !== user )
       return next(new AppError(404, 'Permission denied'));
 
     const review = await Review.findByIdAndDelete(req.params.reviewId);
