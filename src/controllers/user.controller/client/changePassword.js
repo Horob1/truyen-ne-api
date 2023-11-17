@@ -3,10 +3,10 @@ import bcrypt from 'bcrypt';
 
 export const changePassword = async (req, res) => {
   try {
-    const userId = req.body.id;
+    const userId = req.user.id;
     const { currentPassword, newPassword } = req.body;
-
     const user = await User.findById(userId);
+
     if (!user) {
       return res.status(404).json('User Not Found');
     }
@@ -17,9 +17,13 @@ export const changePassword = async (req, res) => {
     if (newPassword === null) {
       return res.status(400).json('New password can not be null');
     }
+    if (newPassword === currentPassword) {
+      return res
+        .status(400)
+        .json('New password must be different from the current one');
+    }
 
-    const hashPassword = await bcrypt.hash(newPassword, 10);
-    user.password = hashPassword;
+    user.password = newPassword;
     await user.save();
     res.status(200).json('Password updated successfully');
   } catch (err) {
