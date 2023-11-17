@@ -1,9 +1,8 @@
-import jwt from "jsonwebtoken";
-import { generateAccessToken } from "../utils/generateAccessToken.js";
+import jwt from 'jsonwebtoken';
 export const checkJWT = (req, res, next) => {
   const token = req.headers.token;
   if (token) {
-    const accessToken = token.split(" ")[1];
+    const accessToken = token.split(' ')[1];
     jwt.verify(accessToken, process.env.SECRET_ACCESS_TOKEN, (err, user) => {
       if (err) {
         res.status(500).json(err);
@@ -13,6 +12,6 @@ export const checkJWT = (req, res, next) => {
       }
     });
   } else {
-    res.status(401).json("Token is not valid");
+    res.status(401).json('Token is not valid');
   }
 };
