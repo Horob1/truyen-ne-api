@@ -4,10 +4,6 @@ const categorySchema = new mongoose.Schema(
   {
     name: String,
     description: String,
-    num: {
-      type: Number,
-      default: 0,
-    },
   },
   {
     toJSON: { virtuals: true },

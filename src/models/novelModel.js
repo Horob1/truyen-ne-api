@@ -12,7 +12,7 @@ const novelSchema = new mongoose.Schema(
     },
     createTime: {
       type: Date,
-      default: Date.now(),
+      default: Date.now,
     },
     debutDate: Date,
     status: {
@@ -28,11 +28,23 @@ const novelSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
-    translator: { type: mongoose.Schema.ObjectId, ref: 'User' },
-    author: { type: mongoose.Schema.ObjectId, ref: 'Author' },
+    translator: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      required: [True, 'Novel must have a name!'],
+    },
+    author: { type: mongoose.Schema.ObjectId, ref: 'translator' },
     categories: [{ type: mongoose.Schema.ObjectId, ref: 'Category' }],
     reviews: [{ type: mongoose.Schema.ObjectId, ref: 'Review' }],
+    reviewsQuan: {
+      type: Number,
+      default: 0,
+    },
     rateAvg: {
+      type: Number,
+      default: 0,
+    },
+    rateSum: {
       type: Number,
       default: 0,
     },
