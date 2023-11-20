@@ -1,19 +1,20 @@
 import Chapter from '../../models/chapterModel.js';
+import Novel from '../../models/novelModel.js';
 
 export const updateChapter = async (req, res, next) => {
   try {
-    const user = await Chapter.findById(req.params.chapterId).select(
-      'translator'
-    ).translator;
+    const user = await Novel.findById(req.params.novelId).select('translator');
 
-    if (req.user.id != user )
-      return next(new AppError(404, 'Permission denied'));
+    const translatorId = user.translator.toString();
 
-    const { number, content } = req.body;
+    if (req.user.id !== translatorId)
+      return res.status(404).json({ status: 'permission denied' });
+    const { number, content, name } = req.body;
 
-    const chapter = await Chapter.findByIdAndUpdate(
+    let chapter = await Chapter.findByIdAndUpdate(
       req.params.chapterId,
       {
+        name,
         number,
         content,
       },
@@ -23,11 +24,13 @@ export const updateChapter = async (req, res, next) => {
       }
     );
 
+    chapter = await Chapter.findById(req.params.chapterId);
+
     res.status(201).json({
       status: 'success',
       chapter,
     });
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
   }
 };

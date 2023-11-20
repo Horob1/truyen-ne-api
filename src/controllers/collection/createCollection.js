@@ -1,12 +1,13 @@
-import Collection from '../../models/collectionModel';
+import Collection from '../../models/collectionModel.js';
 
 export const createCollection = async (req, res, next) => {
   try {
-    const user = req.params.user;
+    const user = req.user.id;
+    const novel = req.params.novelId;
 
-    const { isLove, chapter, novel } = req.body;
+    const isLove = req.body.isLove;
 
-    const collection = new Collection({ isLove, chapter, novel, user });
+    const collection = new Collection({ isLove, novel, user });
 
     await collection.save();
 
@@ -15,6 +16,6 @@ export const createCollection = async (req, res, next) => {
       collection,
     });
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
   }
 };

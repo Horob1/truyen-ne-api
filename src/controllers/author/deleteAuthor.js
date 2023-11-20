@@ -1,4 +1,4 @@
-import Author from '../../models/authorModel';
+import Author from '../../models/authorModel.js';
 import Novel from '../../models/novelModel.js';
 
 export const deleteAuthor = async (req, res, next) => {
@@ -11,6 +11,6 @@ export const deleteAuthor = async (req, res, next) => {
       status: 'success',
     });
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
   }
 };

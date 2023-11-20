@@ -1,35 +1,38 @@
+import e from 'express';
 import Novel from '../../models/novelModel.js';
 import Review from '../../models/reviewModel.js';
 
 export const updateReview = async (req, res, next) => {
   try {
-    const oldReview = await Review.findById(req.params.id);
+    const oldReview = await Review.findById(req.params.reviewId);
 
-    if (oldReview.user != req.user.id)
-      return next(new AppError(404, 'Permission denied'));
+    if (oldReview.user.id !== req.user.id)
+      return res.status(404).json({
+        status: 'permission denied',
+      });
 
     const { content, rate } = req.body;
 
-    const review = await Review.findByIdAndUpdate(req.params.id, {
+    let review = await Review.findByIdAndUpdate(req.params.reviewId, {
       content,
       rate,
     });
 
-    if (oldReview.rate != rate) {
-      await Novel.findByIdAndUpdate(oldReview.novel, [
-        { $inc: { rateSum: rate - oldReview.rate } },
+    review = await Review.findById(req.params.reviewId);
+
+    if (oldReview.rate !== rate) {
+      const thisNovel = await Novel.findByIdAndUpdate(
+        oldReview.novel,
         {
-          $set: {
-            rateAvg: {
-              $cond: {
-                if: { $eq: ['$reviewsQuan', 0] },
-                then: 0, // To avoid division by zero
-                else: { $divide: ['$rateSum', '$reviewsQuan'] },
-              },
-            },
-          },
+          $inc: { rateSum: rate - oldReview.rate },
         },
-      ]);
+        { new: true }
+      );
+
+      thisNovel.rateAvg = thisNovel.rateSum / thisNovel.reviewsQuan;
+      await thisNovel.save();
+
+      console.log(thisNovel);
     }
 
     res.status(201).json({
@@ -37,6 +40,7 @@ export const updateReview = async (req, res, next) => {
       review,
     });
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
+    console.log(error);
   }
 };

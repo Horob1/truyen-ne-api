@@ -6,12 +6,6 @@ export const createNovel = async (req, res, next) => {
 
     const translator = req.user.id;
 
-    let author = req.body.author;
-    //kiểm tra xem có phải truyện tự sáng tác
-    if (req.body.isMine) {
-      author = undefined;
-    }
-
     const newNovel = new Novel({
       name,
       description,
@@ -29,6 +23,6 @@ export const createNovel = async (req, res, next) => {
       newNovel,
     });
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
   }
 };

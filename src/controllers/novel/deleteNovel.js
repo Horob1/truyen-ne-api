@@ -7,11 +7,12 @@ import Review from '../../models/reviewModel.js';
 
 export const deleteNovel = async (req, res, next) => {
   try {
-    const user = await Novel.findById(req.params.novelId).select('translator')
-      .translator;
+    const user = await Novel.findById(req.params.novelId).select('translator');
 
-    if (req.user.id != user)
-      return next(new AppError(404, 'Permission denied'));
+    const translatorId = user.translator.toString();
+
+    if (req.user.id !== translatorId)
+      return res.status(404).json({ status: 'permission denied' });
 
     await Chapter.deleteMany({ novel: req.params.novelId });
     await Collection.deleteMany({ novel: req.params.novelId });
@@ -24,7 +25,8 @@ export const deleteNovel = async (req, res, next) => {
     res.status(205).json({
       status: 'success',
     });
-  } catch (error) {
+  } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 };

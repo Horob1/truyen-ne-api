@@ -1,12 +1,15 @@
 import Category from '../../models/categoryModel.js';
 
-export const createCategory = async (req, res, nexy) => {
+export const updateCategory = async (req, res, nexy) => {
   try {
     const { name, description } = req.body;
 
-    const category = new Category({ name, description });
+    let category = await Category.findByIdAndUpdate(req.params.categoryId, {
+      name,
+      description,
+    });
 
-    await category.save();
+    category = await Category.findById(req.params.categoryId);
 
     res.status(201).json({
       status: 'success',

@@ -1,21 +1,23 @@
-import Author from '../../models/authorModel';
+import Author from '../../models/authorModel.js';
 
 export const updateAuthor = async (req, res, next) => {
   try {
     const { name, birthday, description, avatar } = req.body;
 
-    const author = await Author.findByIdAndUpdate(req.params.authorId, {
+    let author = await Author.findByIdAndUpdate(req.params.authorId, {
       name,
       birthday,
       description,
       avatar,
     });
 
+    author = await Author.findById(req.params.authorId);
+
     res.status(201).json({
       status: 'success',
       author,
     });
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
   }
 };

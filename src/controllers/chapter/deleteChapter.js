@@ -3,19 +3,19 @@ import Novel from '../../models/novelModel.js';
 
 export const deleteChapter = async (req, res, next) => {
   try {
-    const user = await Chapter.findById(req.params.chapterId).select(
-      'translator'
-    ).translator;
+    const user = await Novel.findById(req.params.novelId).select('translator');
 
-    if (req.user.id != user)
-      return next(new AppError(404, 'Permission denied'));
+    const translatorId = user.translator.toString();
+
+    if (req.user.id !== translatorId)
+      return res.status(404).json({ status: 'permission denied' });
 
     const deletedChapter = await Chapter.findByIdAndDelete(
       req.params.chapterId
     );
 
     await Novel.findByIdAndUpdate(
-      req.params.id,
+      req.params.novelId,
       { $inc: { progress: -1 } },
       {
         new: true,
@@ -27,6 +27,6 @@ export const deleteChapter = async (req, res, next) => {
       status: 'success',
     });
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
   }
 };

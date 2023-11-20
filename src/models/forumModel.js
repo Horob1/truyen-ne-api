@@ -28,6 +28,6 @@ const forumSchema = new mongoose.Schema(
   }
 );
 
-const Forum = mongoose.Model('Forum', forumSchema);
+const Forum = mongoose.model('Forum', forumSchema);
 
 export default Forum;
