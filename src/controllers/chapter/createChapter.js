@@ -26,7 +26,6 @@ export const createChapter = async (req, res, next) => {
       }
     );
 
-
     res.status(201).json({
       status: 'success',
       chapter,

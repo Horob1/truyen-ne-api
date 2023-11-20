@@ -1,4 +1,3 @@
-import e from 'express';
 import Novel from '../../models/novelModel.js';
 import Review from '../../models/reviewModel.js';
 

@@ -1,7 +1,6 @@
 import Novel from '../../models/novelModel.js';
 import Review from '../../models/reviewModel.js';
 
-
 export const deleteReview = async (req, res, next) => {
   try {
     const review = await Review.findByIdAndDelete(req.params.reviewId);
