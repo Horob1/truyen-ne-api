@@ -9,6 +9,10 @@ export const updateCollection = async (req, res, next) => {
       { isLove }
     );
 
+    if (!collection) {
+      res.status(404).json({ status: 'fail', message: 'something was wrong' });
+    }
+
     collection.isLove = isLove;
 
     res.status(201).json({

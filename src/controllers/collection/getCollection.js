@@ -7,6 +7,10 @@ export const getCollection = async (req, res, next) => {
       novel: req.params.novelId,
     });
 
+    if (!collection) {
+      res.status(404).json({ status: 'fail', message: 'something was wrong' });
+    }
+
     res.status(200).json({
       status: 'success',
       collection,

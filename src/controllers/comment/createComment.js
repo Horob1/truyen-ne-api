@@ -1,6 +1,6 @@
 import Comment from '../../models/commentModel';
 import Forum from '../../models/forumModel';
-import AppError from '../../utils/appError.js';
+
 
 export const createComment = async (req, res, next) => {
   try {
@@ -15,9 +15,9 @@ export const createComment = async (req, res, next) => {
 
     const forumPost = await Forum.findById(forum);
 
-    if(forumPost.isClose) {
-      return next(new AppError(404, "This post is close!"))
-    }
+    // if(forumPost.isClose) {
+    //   return next(new AppError(404, "This post is close!"))
+    // }
 
     const comment = new Comment({
       content,

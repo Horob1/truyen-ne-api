@@ -17,6 +17,9 @@ export const deleteReview = async (req, res, next) => {
       { new: true }
     );
 
+    if (!thisNovel)
+      res.status(404).json({ status: 'fail', message: 'something was wrong' });
+
     if (thisNovel.reviewsQuan === 0) thisNovel.rateAvg = 0;
     else thisNovel.rateAvg = thisNovel.rateSum / thisNovel.reviewsQuan;
 
