@@ -3,7 +3,7 @@ import Novel from '../../models/novelModel.js';
 
 export const createChapter = async (req, res, next) => {
   try {
-    const user = await Novel.findById(req.params.novelId).select('translator');
+    const user = await Novel.findById(req.params.novelId);
 
     const translatorId = user.translator.toString();
 
@@ -17,8 +17,8 @@ export const createChapter = async (req, res, next) => {
 
     await chapter.save();
 
-    const thisNovel = await Novel.findByIdAndUpdate(
-      novel,
+    await Novel.findByIdAndUpdate(
+      req.params.id,
       { $inc: { progress: 1 } },
       {
         new: true,
@@ -33,5 +33,6 @@ export const createChapter = async (req, res, next) => {
     });
   } catch (error) {
     res.status(500).json(error);
+    console.log(error);
   }
 };
