@@ -6,8 +6,7 @@ import Translator from '../../models/userModel.js';
 export const getNovel = async (req, res, next) => {
   try {
     let novel = await Novel.findById(req.params.novelId);
-    if (!novel)
-      return next(new AppError("'No document found with this ID'", 404));
+    if (!novel) return res.status(404).json({ status: 'permission denied' });
 
     if (novel.translator) {
       novel.translator = await Translator.findById(novel.translator).select(

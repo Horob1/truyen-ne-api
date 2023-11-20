@@ -3,7 +3,10 @@ import Novel from '../../models/novelModel.js';
 
 export const deleteCategory = async (req, res, nexy) => {
   try {
-    await Category.findByIdAndDelete(req.params.categoryId);
+    const cate = await Category.findByIdAndDelete(req.params.categoryId);
+
+    if (!cate)
+      res.status(404).json({ status: 'fail', message: 'something was wrong' });
 
     await Novel.findOneAndUpdate(
       { categories: req.params.categoryId },

@@ -5,7 +5,7 @@ export const deleteAuthor = async (req, res, next) => {
   try {
     const author = await Author.findByIdAndDelete(req.params.authorId);
 
-    if (author)
+    if (!author)
       res.status(404).json({ status: 'fail', message: 'something was wrong' });
 
     await Novel.updateMany(

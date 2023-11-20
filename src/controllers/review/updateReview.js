@@ -17,6 +17,9 @@ export const updateReview = async (req, res, next) => {
       rate,
     });
 
+    if (!review)
+      res.status(404).json({ status: 'fail', message: 'something was wrong' });
+
     review = await Review.findById(req.params.reviewId);
 
     if (oldReview.rate !== rate) {

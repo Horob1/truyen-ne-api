@@ -4,8 +4,8 @@ export const updateForumPost = async (req, res, next) => {
   try {
     const user = await Forum.findById(req.params.forumId).select('auth').auth;
 
-    if (req.user.id != user)
-      return next(new AppError(404, 'Permission denied'));
+    // if (req.user.id != user)
+    //   return next(new AppError(404, 'Permission denied'));
 
     const { heading, content } = req.body;
 

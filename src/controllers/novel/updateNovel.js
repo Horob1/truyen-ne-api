@@ -32,6 +32,9 @@ export const updateNovel = async (req, res, next) => {
       }
     );
 
+    if (!novel)
+      res.status(404).json({ status: 'fail', message: 'something was wrong' });
+
     novel = await Novel.findById(req.params.novelId);
 
     res.status(201).json({

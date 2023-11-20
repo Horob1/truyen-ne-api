@@ -9,6 +9,9 @@ export const updateCategory = async (req, res, nexy) => {
       description,
     });
 
+    if (!category)
+      res.status(404).json({ status: 'fail', message: 'something was wrong' });
+
     category = await Category.findById(req.params.categoryId);
 
     res.status(201).json({

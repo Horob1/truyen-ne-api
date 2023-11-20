@@ -11,6 +11,9 @@ export const updateAuthor = async (req, res, next) => {
       avatar,
     });
 
+    if (!author)
+      res.status(404).json({ status: 'fail', message: 'something was wrong' });
+
     author = await Author.findById(req.params.authorId);
 
     res.status(201).json({

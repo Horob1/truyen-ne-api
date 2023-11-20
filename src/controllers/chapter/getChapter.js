@@ -15,7 +15,7 @@ export const getChapter = async (req, res, next) => {
     );
 
     if (!chapter) {
-      return next(new AppError("'No document found with this ID'", 404));
+      res.status(404).json({ status: 'fail', message: 'something was wrong' });
     }
 
     chapter.translator = await Translator.findById(chapter.translator).select(

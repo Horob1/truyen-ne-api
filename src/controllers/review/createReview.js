@@ -18,6 +18,9 @@ export const createReview = async (req, res, next) => {
       { new: true }
     );
 
+    if (!thisNovel)
+      res.status(404).json({ status: 'fail', message: 'something was wrong' });
+
     thisNovel.rateAvg = thisNovel.rateSum / thisNovel.reviewsQuan;
 
     await thisNovel.save();
