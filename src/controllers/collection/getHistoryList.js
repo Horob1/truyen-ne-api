@@ -8,6 +8,7 @@ export const getHistoryList = async (req, res, next) => {
 
     res.status(200).json({
       status: 'success',
+      result: historyList.length,
       historyList,
     });
   } catch (error) {
