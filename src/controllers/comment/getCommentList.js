@@ -8,6 +8,7 @@ export const getForumCommentList = async (req, res, next) => {
 
     res.status(200).json({
       status: 'success',
+      result: commentList.length,
       commentList,
     });
   } catch (error) {
@@ -23,6 +24,7 @@ export const getChapterCommentList = async (req, res, next) => {
   
       res.status(200).json({
         status: 'success',
+        result: commentList.length,
         commentList,
       });
     } catch (error) {

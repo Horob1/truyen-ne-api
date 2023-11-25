@@ -1,4 +1,4 @@
-import Category from '../../models/categoryModel';
+import Category from '../../models/categoryModel.js';
 
 export const createCategory = async (req, res, nexy) => {
   try {
@@ -13,6 +13,6 @@ export const createCategory = async (req, res, nexy) => {
       category,
     });
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
   }
 };

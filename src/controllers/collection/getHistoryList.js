@@ -1,17 +1,17 @@
-import Collection from '../../models/collectionModel';
+import Collection from '../../models/collectionModel.js';
 
 export const getHistoryList = async (req, res, next) => {
   try {
-    const getHistoryList = await Collection.find({
-      auth: req.user.id,
+    const historyList = await Collection.find({
+      user: req.user.id,
     });
 
     res.status(200).json({
       status: 'success',
-      getHistoryList,
+      result: historyList.length,
+      historyList,
     });
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
   }
 };
-

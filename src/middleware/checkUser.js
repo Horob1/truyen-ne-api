@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-export const checkJWT = (req, res, next) => {
+export const checkUser = (req, res, next) => {
   const token = req.headers.token;
   if (token) {
     const accessToken = token.split(' ')[1];
@@ -12,6 +12,6 @@ export const checkJWT = (req, res, next) => {
       }
     });
   } else {
-    res.status(401).json('Token is not valid');
+    next();
   }
 };

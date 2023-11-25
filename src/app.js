@@ -5,6 +5,13 @@ import cookieParser from 'cookie-parser';
 import authRouter from './routes/auth.js';
 import userRouter from './routes/user.js';
 import adminRouter from './routes/admin.js';
+import novelRouter from './routes/novel.js';
+import authorRouter from './routes/author.js';
+import categoryRouter from './routes/category.js';
+import collectionRouter from './routes/collection.js';
+import searchRouter from './routes/search.js';
+import forumRouter from './routes/forum.js';
+import commentRouter from './routes/comment.js';
 
 const app = express();
 app.use(cookieParser());
@@ -20,13 +27,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
-
-app.use('/auth', authRouter);
-app.use('/user', userRouter);
-app.use('/admin', adminRouter);
 // show status of api in dev env
 if ((process.env.NODE_ENV = 'development')) {
   app.use(morgan('dev'));
 }
+
+app.use('/auth', authRouter);
+app.use('/user', userRouter);
+app.use('/admin', adminRouter);
+app.use('/api/novel', novelRouter);
+app.use('/api/author', authorRouter);
+app.use('/api/category', categoryRouter);
+app.use('/api/collection', collectionRouter);
+app.use('api/forum', forumRouter);
+app.use('api/search', searchRouter);
+app.use('api/comment', commentRouter);
 
 export default app;
