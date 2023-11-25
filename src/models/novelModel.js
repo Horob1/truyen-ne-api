@@ -67,6 +67,23 @@ const novelSchema = new mongoose.Schema(
   },
 );
 
+novelSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'author',
+    select: 'name'
+  });
+
+  next();
+});
+
+novelSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'translator',
+    select: 'firstName lastName avatar'
+    });
+  next();
+});
+
 const Novel = mongoose.model('Novel', novelSchema);
 
 export default Novel;

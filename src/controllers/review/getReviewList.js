@@ -7,6 +7,7 @@ export const getReviewList = async (req, res, next) => {
 
     res.status(200).json({
       status: 'success',
+      result: reviewList.length,
       reviewList,
     });
   } catch (error) {

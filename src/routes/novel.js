@@ -15,9 +15,19 @@ import { getReviewList } from '../controllers/review/getReviewList.js';
 import { createReview } from '../controllers/review/createReview.js';
 import { updateReview } from '../controllers/review/updateReview.js';
 import { deleteReview } from '../controllers/review/deleteReview.js';
+import {
+  getTop10View,
+  getTop10Finished,
+  getTop10Newest,
+} from '../controllers/novel/getNovelList.js';
+import { getNewChapterList } from '../controllers/chapter/getNewChapterList.js';
 
 const router = Router();
 
+router.route('/top-10-view').get(getTop10View);
+router.route('/moi-ra-lo').get(getNewChapterList);
+router.route('/top-10-finished').get(getTop10Finished);
+router.route('/top-10-newest').get(getTop10Newest);
 //get a novel
 router.route('/:novelId').get(getNovel);
 //get chapterList

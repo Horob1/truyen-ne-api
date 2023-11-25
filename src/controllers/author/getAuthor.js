@@ -1,4 +1,5 @@
 import Author from '../../models/authorModel.js';
+import Novel from '../../models/novelModel.js';
 
 export const getAuthor = async (req, res, next) => {
   try {
@@ -6,7 +7,12 @@ export const getAuthor = async (req, res, next) => {
 
     if (!author)
       res.status(404).json({ status: 'fail', message: 'something was wrong' });
-    
+
+    //query novel of author
+    const novels = await Novel.find({ author: req.params.authorId });
+
+    author.novels = novels;
+
     res.status(200).json({
       status: 'success',
       author,

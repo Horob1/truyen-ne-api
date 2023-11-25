@@ -9,6 +9,9 @@ import novelRouter from './routes/novel.js';
 import authorRouter from './routes/author.js';
 import categoryRouter from './routes/category.js';
 import collectionRouter from './routes/collection.js';
+import searchRouter from './routes/search.js';
+import forumRouter from './routes/forum.js';
+import commentRouter from './routes/comment.js';
 
 const app = express();
 app.use(cookieParser());
@@ -36,5 +39,8 @@ app.use('/api/novel', novelRouter);
 app.use('/api/author', authorRouter);
 app.use('/api/category', categoryRouter);
 app.use('/api/collection', collectionRouter);
+app.use('api/forum', forumRouter);
+app.use('api/search', searchRouter);
+app.use('api/comment', commentRouter);
 
 export default app;
