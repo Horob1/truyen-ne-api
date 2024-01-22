@@ -1,4 +1,4 @@
-import Forum from '../../models/forumModel';
+import Forum from '../../models/forumModel.js';
 
 export const updateForumPost = async (req, res, next) => {
   try {
@@ -21,6 +21,6 @@ export const updateForumPost = async (req, res, next) => {
       forumPost,
     });
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
   }
 };

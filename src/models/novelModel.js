@@ -35,7 +35,6 @@ const novelSchema = new mongoose.Schema(
     },
     author: { type: mongoose.Schema.ObjectId, ref: 'translator' },
     categories: [{ type: mongoose.Schema.ObjectId, ref: 'Category' }],
-    reviews: [{ type: mongoose.Schema.ObjectId, ref: 'Review' }],
     reviewsQuan: {
       type: Number,
       default: 0,
