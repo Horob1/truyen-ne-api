@@ -28,6 +28,6 @@ export const createCommentChapter = async (req, res, next) => {
       comment,
     });
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
   }
 };
