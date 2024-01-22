@@ -1,4 +1,4 @@
-import Comment from '../../models/commentModel';
+import Comment from '../../models/commentModel.js';
 
 export const getForumCommentList = async (req, res, next) => {
   try {
@@ -28,7 +28,7 @@ export const getChapterCommentList = async (req, res, next) => {
         commentList,
       });
     } catch (error) {
-      res.status(500).json(err);
+      res.status(500).json(error);
     }
   };
   
