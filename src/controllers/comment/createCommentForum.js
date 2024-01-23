@@ -1,5 +1,5 @@
-import Comment from '../../models/commentModel';
-import Forum from '../../models/forumModel';
+import Comment from '../../models/commentModel.js';
+import Forum from '../../models/forumModel.js';
 
 export const createCommentForum = async (req, res, next) => {
   try {

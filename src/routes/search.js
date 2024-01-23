@@ -1,7 +1,6 @@
 import { Router } from 'express';
-import { search } from '../controllers/novel/getNovelList';
-import { searchF } from '../controllers/forum/getForumPostList';
-
+import { search } from '../controllers/novel/getNovelList.js';
+import { searchF } from '../controllers/forum/getForumPostList.js';
 
 const router = Router();
 
