@@ -51,6 +51,14 @@ const novelSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    love: {
+      type: Number,
+      default: 0,
+    },
+    coverImg: {
+      type: String,
+      default: 0,
+    },
   },
   {
     toJSON: { virtuals: true },
@@ -58,20 +66,20 @@ const novelSchema = new mongoose.Schema(
   }
 );
 
-novelSchema.pre(/^find/, function(next) {
+novelSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'author',
-    select: 'name'
+    select: 'name',
   });
 
   next();
 });
 
-novelSchema.pre(/^find/, function(next) {
+novelSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'translator',
-    select: 'firstName lastName avatar'
-    });
+    select: 'firstName lastName avatar',
+  });
   next();
 });
 

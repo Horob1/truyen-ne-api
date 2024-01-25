@@ -9,7 +9,8 @@ export const updateNovel = async (req, res, next) => {
     if (req.user.id !== translatorId)
       return res.status(404).json({ status: 'permission denied' });
 
-    const { name, description, debutDate, photo, categories } = req.body;
+    const { name, description, debutDate, photo, categories, coverImg } =
+      req.body;
 
     let author = req.body.author;
 
@@ -25,6 +26,7 @@ export const updateNovel = async (req, res, next) => {
         photo,
         categories,
         author,
+        coverImg,
       },
       {
         new: true,
