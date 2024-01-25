@@ -8,7 +8,7 @@ export const search = async (req, res, next) => {
         name: { $regex: req.body.search, $options: 'i' },
         categories: req.body.categories,
       }),
-      req.query
+      req.query,
     )
       .fillter()
       .sort()
