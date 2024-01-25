@@ -1,28 +1,26 @@
 import Novel from '../../models/novelModel.js';
 import Review from '../../models/reviewModel.js';
+import AppError from '../../utils/appError.js';
 
 export const deleteReview = async (req, res, next) => {
   try {
     const review = await Review.findByIdAndDelete(req.params.reviewId);
 
-    if (req.user.id !== review.user.id)
-      return res.status(404).json({
-        status: 'permission denied',
-      });
-
-    const thisNovel = await Novel.findByIdAndUpdate(
-      req.params.novelId,
-      { $inc: { rateSum: -review.rate, reviewsQuan: -1 } },
-      { new: true }
-    );
-
-    if (!thisNovel)
-      res.status(404).json({ status: 'fail', message: 'something was wrong' });
-
-    if (thisNovel.reviewsQuan === 0) thisNovel.rateAvg = 0;
-    else thisNovel.rateAvg = thisNovel.rateSum / thisNovel.reviewsQuan;
-
-    await thisNovel.save();
+    await Novel.findByIdAndUpdate(req.params.id, [
+      { $inc: { rateSum: -review.rate } },
+      { $inc: { reviewsQuan: -1 } },
+      {
+        $set: {
+          rateAvg: {
+            $cond: {
+              if: { $eq: ['$reviewsQuan', 0] },
+              then: 0, // To avoid division by zero
+              else: { $divide: ['$rateSum', '$reviewsQuan'] },
+            },
+          },
+        },
+      },
+    ]);
 
     res.status(205).json({
       status: 'success',
