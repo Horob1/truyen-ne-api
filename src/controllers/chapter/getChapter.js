@@ -31,23 +31,35 @@ export const getChapter = async (req, res, next) => {
       }
     );
 
-    await Collection.findOneAndUpdate(
-      {
-        user: req.user.id,
-        novel: req.params.novelId,
-      },
-      { $set: { timestamp: Date.now } },
-      {
-        new: true,
-        runValidators: true,
+    if (req.user) {
+      const history = await Collection.findOneAndUpdate(
+        {
+          user: req.user.id,
+          novel: req.params.novelId,
+        },
+        { $set: { timestamp: Date.now(), chapter: req.params.chapterId } },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+
+      console.log(history);
+      if (!history) {
+        const newCollection = new Collection({
+          user: req.user.id,
+          novel: req.params.novelId,
+          chapter: req.params.chapterId,
+        });
+        await newCollection.save();
       }
-    );
+    }
 
     res.status(200).json({
       status: 'success',
       chapter,
     });
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
   }
 };

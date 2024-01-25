@@ -4,7 +4,7 @@ const novelSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [True, 'Novel must have a name!'],
+      required: [true, 'Novel must have a name!'],
     },
     description: {
       type: String,
@@ -31,7 +31,7 @@ const novelSchema = new mongoose.Schema(
     translator: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
-      required: [True, 'Novel must have a name!'],
+      required: [true, 'Novel must have a name!'],
     },
     author: { type: mongoose.Schema.ObjectId, ref: 'translator' },
     categories: [{ type: mongoose.Schema.ObjectId, ref: 'Category' }],

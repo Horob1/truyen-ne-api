@@ -1,14 +1,15 @@
 import Collection from '../../models/collectionModel.js';
 
-export const getHistoryList = async (req, res, next) => {
+export const getCollection = async (req, res, next) => {
   try {
-    const historyList = await Collection.find({
+    const collection = await Collection.find({
       user: req.user.id,
+      novel: req.params.novelId,
     });
 
     res.status(200).json({
       status: 'success',
-      historyList,
+      collection,
     });
   } catch (error) {
     res.status(500).json(error);

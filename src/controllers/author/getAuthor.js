@@ -1,4 +1,4 @@
-import Author from '../../models/authorModel';
+import Author from '../../models/authorModel.js';
 
 export const getAuthor = async (req, res, next) => {
   try {
@@ -9,6 +9,6 @@ export const getAuthor = async (req, res, next) => {
       author,
     });
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
   }
 };

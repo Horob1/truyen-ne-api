@@ -32,3 +32,5 @@ const chapterSchema = new mongoose.Schema(
 );
 
 const Chapter = mongoose.model('Chapter', chapterSchema);
+
+export default Chapter;
