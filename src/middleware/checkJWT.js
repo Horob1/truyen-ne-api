@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 export const checkJWT = (req, res, next) => {
   const token = req.headers.token;
-  console.log('🚀 ~ checkJWT ~ token:', token);
   if (token) {
     const accessToken = token.split(' ')[1];
     jwt.verify(accessToken, process.env.SECRET_ACCESS_TOKEN, (err, user) => {
