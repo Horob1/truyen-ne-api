@@ -52,11 +52,19 @@ const novelSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    love: {
+      type: Number,
+      default: 0,
+    },
+    coverImg: {
+      type: String,
+      default: 0,
+    },
   },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  }
+  },
 );
 
 novelSchema.pre(/^find/, function(next) {
