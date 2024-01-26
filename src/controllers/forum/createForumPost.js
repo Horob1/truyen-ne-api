@@ -1,4 +1,4 @@
-import Forum from '../../models/forumModel';
+import Forum from '../../models/forumModel.js';
 
 export const createForumPost = async (req, res, next) => {
   try {
