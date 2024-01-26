@@ -13,8 +13,12 @@ import collectionRouter from './routes/collection.js';
 import searchRouter from './routes/search.js';
 import forumRouter from './routes/forum.js';
 import commentRouter from './routes/comment.js';
+import { Server as socketIo } from 'socket.io';
+import http from 'http';
 
 const app = express();
+const server = http.createServer(app);
+const io = new socketIo(server);
 app.use(cookieParser());
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', req.headers.origin);
@@ -32,6 +36,20 @@ app.use(bodyParser.json());
 
 app.use(express.json());
 
+app.post('/send-message', (req, res) => {
+  const { user, message } = req.body;
+
+  // Gửi tin nhắn đến tất cả các kết nối
+  const messageData = {
+    user,
+    message,
+    timestamp: new Date().toLocaleTimeString(),
+  };
+  io.emit('chatMessage', messageData);
+
+  res.json({ success: true, message: 'Message sent successfully' });
+});
+
 //midleware
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -42,6 +60,15 @@ app.use(bodyParser.json());
 if ((process.env.NODE_ENV = 'development')) {
   app.use(morgan('dev'));
 }
+//config socket.io for connection
+io.on('connection', (socket) => {
+  console.log('A user connected');
+
+  // Xử lý sự kiện khi người dùng gửi tin nhắn
+  socket.on('chatMessage', (data) => {
+    io.emit('chatMessage', data); // Gửi tin nhắn đến tất cả các kết nối (admins và users)
+  });
+});
 
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
@@ -54,4 +81,4 @@ app.use('api/forum', forumRouter);
 app.use('api/search', searchRouter);
 app.use('api/comment', commentRouter);
 
-export default app;
+export { app, server, io };
