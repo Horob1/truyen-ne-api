@@ -1,11 +1,13 @@
-import Forum from '../../models/forumModel';
+import Forum from '../../models/forumModel.js';
 
 export const updateForumPost = async (req, res, next) => {
   try {
-    const user = await Forum.findById(req.params.forumId).select('auth').auth;
+    const user = await Forum.findById(req.params.forumId).select('auth');
 
-    if (req.user.id != user)
-      return next(new AppError(404, 'Permission denied'));
+    if (req.user.id !== user.auth)
+      return res
+        .status(404)
+        .json({ status: 'fail', message: 'Permission denied' });
 
     const { heading, content } = req.body;
 

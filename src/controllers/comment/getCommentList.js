@@ -1,4 +1,4 @@
-import Comment from '../../models/commentModel';
+import Comment from '../../models/commentModel.js';
 
 export const getForumCommentList = async (req, res, next) => {
   try {
@@ -8,6 +8,7 @@ export const getForumCommentList = async (req, res, next) => {
 
     res.status(200).json({
       status: 'success',
+      result: commentList.length,
       commentList,
     });
   } catch (error) {
@@ -16,17 +17,17 @@ export const getForumCommentList = async (req, res, next) => {
 };
 
 export const getChapterCommentList = async (req, res, next) => {
-    try {
-      const commentList = await Comment.find({
-        chapter: req.params.chapterId,
-      });
-  
-      res.status(200).json({
-        status: 'success',
-        commentList,
-      });
-    } catch (error) {
-      res.status(500).json(err);
-    }
-  };
-  
+  try {
+    const commentList = await Comment.find({
+      chapter: req.params.chapterId,
+    });
+
+    res.status(200).json({
+      status: 'success',
+      result: commentList.length,
+      commentList,
+    });
+  } catch (error) {
+    res.status(500).json(err);
+  }
+};

@@ -1,12 +1,13 @@
-import Comment from '../../models/commentModel';
+import Comment from '../../models/commentModel.js';
 
 export const deleteComment = async (req, res, next) => {
   try {
-    const user = await Comment.findById(req.params.commentId).select('user')
-      .user;
+    const user = await Comment.findById(req.params.commentId).select('user');
 
-    if (req.user.id != user)
-      return next(new AppError(404, 'Permission denied'));
+    if (req.user.id !== user.id)
+      return res
+        .status(404)
+        .json({ status: 'fail', message: 'Permission denied' });
 
     await Comment.findByIdAndDelete(req.params.commentId);
 

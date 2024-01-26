@@ -2,11 +2,12 @@ import Novel from '../../models/novelModel.js';
 
 export const updateNovel = async (req, res, next) => {
   try {
-    const user = await Novel.findById(req.params.novelId).select('translator')
-      .translator;
+    const user = await Novel.findById(req.params.novelId).select('translator');
 
-    if (req.user.id != user)
-      return next(new AppError(404, 'Permission denied'));
+    const translatorId = user.translator.toString();
+
+    if (req.user.id !== translatorId)
+      return res.status(404).json({ status: 'permission denied' });
 
     const { name, description, debutDate, photo, categories, coverImg } =
       req.body;
@@ -16,7 +17,7 @@ export const updateNovel = async (req, res, next) => {
     if (req.body.isMine) {
       author = undefined;
     }
-    const novel = await Novel.findByIdAndUpdate(
+    let novel = await Novel.findByIdAndUpdate(
       req.params.novelId,
       {
         name,
@@ -30,14 +31,19 @@ export const updateNovel = async (req, res, next) => {
       {
         new: true,
         runValidators: true,
-      },
+      }
     );
+
+    if (!novel)
+      res.status(404).json({ status: 'fail', message: 'something was wrong' });
+
+    novel = await Novel.findById(req.params.novelId);
 
     res.status(201).json({
       status: 'success',
       novel,
     });
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
   }
 };
