@@ -1,22 +1,17 @@
 import Novel from '../../models/novelModel.js';
 import APIFeatures from '../../utils/apiFeatures.js';
 
-export const search = async (req, res, next) => {
+export const getNovelList = async (req, res, next) => {
   try {
-    const features = new APIFeatures(
-      Novel.find({
-        name: { $regex: req.body.search, $options: 'i' },
-        categories: req.body.categories,
-      }),
-      req.query
-    )
-      .fillter()
-      .sort()
-      .limitFields()
-      .paginate();
-
+    const search = req.body.search || '';
+    const categories = req.body.categories || [];
+    const query = {
+      name: { $regex: search, $options: 'i' },
+      categories: categories,
+    };
+    const features = new APIFeatures(Novel.find(query), req.query);
+    features.filter().paginate().sort().limitFields();
     const novels = await features.data;
-
     res.status(200).json({
       status: 'success',
       result: novels.length,
@@ -26,7 +21,6 @@ export const search = async (req, res, next) => {
     res.status(500).json(error);
   }
 };
-
 export const getTop10View = async (req, res, next) => {
   try {
     const novels = await Novel.find().limit(10).sort('-watch');

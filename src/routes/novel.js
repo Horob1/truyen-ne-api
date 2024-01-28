@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getNovel } from '../controllers/novel/getNovel.js';
+import { getNovelById } from '../controllers/novel/getNovelById.js';
 import { createNovel } from '../controllers/novel/createNovel.js';
 import { updateNovel } from '../controllers/novel/updateNovel.js';
 import { deleteNovel } from '../controllers/novel/deleteNovel.js';
@@ -19,17 +19,19 @@ import {
   getTop10View,
   getTop10Finished,
   getTop10Newest,
+  getNovelList,
 } from '../controllers/novel/getNovelList.js';
 import { getNewChapterList } from '../controllers/chapter/getNewChapterList.js';
 
 const router = Router();
 
+router.route('/').get(getNovelList);
 router.route('/top-10-view').get(getTop10View);
 router.route('/moi-ra-lo').get(getNewChapterList);
 router.route('/top-10-finished').get(getTop10Finished);
 router.route('/top-10-newest').get(getTop10Newest);
 //get a novel
-router.route('/:novelId').get(getNovel);
+router.route('/:novelId').get(getNovelById);
 //get chapterList
 router.route('/:novelId/chapterList').get(getChapterList);
 //get review List
