@@ -4,15 +4,18 @@ class APIFeatures {
     this.query = query;
   }
 
-  fillter() {
+  filter() {
     const queryOBJ = { ...this.query };
 
     //1 sub page, limit, sort, fields form query
     const specialParams = ['sort', 'fields', 'page', 'limit'];
-    specialParams.forEach(el => delete queryOBJ[el]);
+    specialParams.forEach((el) => delete queryOBJ[el]);
     //2 better query
     let querySTR = JSON.stringify(queryOBJ);
-    querySTR = querySTR.replace(`/\b(gte|gt|lte|lt)\b/g`, match => `$${match}`);
+    querySTR = querySTR.replace(
+      `/\b(gte|gt|lte|lt)\b/g`,
+      (match) => `$${match}`
+    );
 
     this.data.find(JSON.parse(querySTR));
 
@@ -46,7 +49,7 @@ class APIFeatures {
 
   paginate() {
     const page = this.query.page * 1 || 1;
-    const limit = this.query.limit * 1 || 20;
+    const limit = this.query.limit * 1 || 10;
     const skip = (page - 1) * limit;
 
     // if(this.query.page) {
