@@ -2,16 +2,16 @@ import User from '../../../models/userModel.js';
 
 export const resetPassword = async (req, res) => {
   try {
-    const { email, otp, newPassword, confirmPassword } = req.body;
+    const { otp, newPassword, confirmPassword } = req.body;
     if (newPassword !== confirmPassword) {
       return res.status(400).json({ message: 'Passwords do not match' });
     }
     const user = await User.findOne({
-      email,
       resetPasswordToken: otp,
       resetPasswordExpires: { $gt: Date.now() },
     });
 
+    console.log(user);
     if (!user) {
       return res.status(400).json({ message: 'Invalid or expired OTP' });
     }
