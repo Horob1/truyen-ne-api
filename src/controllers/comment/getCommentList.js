@@ -28,6 +28,6 @@ export const getChapterCommentList = async (req, res, next) => {
       commentList,
     });
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
   }
 };

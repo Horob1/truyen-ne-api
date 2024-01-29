@@ -1,4 +1,5 @@
 let refreshTokens = [];
+
 export const logOut = async (req, res) => {
   try {
     const { refreshToken } = req.cookies;

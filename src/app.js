@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
@@ -19,6 +20,16 @@ const app = express();
 const server = http.createServer(app);
 const io = new socketIo(server);
 app.use(cookieParser());
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});
+
+app.use(cors({ origin: 'http://localhost:5173', optionsSuccessStatus: 200 }));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
