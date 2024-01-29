@@ -35,7 +35,6 @@ const novelSchema = new mongoose.Schema(
     },
     author: { type: mongoose.Schema.ObjectId, ref: 'translator' },
     categories: [{ type: mongoose.Schema.ObjectId, ref: 'Category' }],
-    reviews: [{ type: mongoose.Schema.ObjectId, ref: 'Review' }],
     reviewsQuan: {
       type: Number,
       default: 0,
@@ -67,20 +66,20 @@ const novelSchema = new mongoose.Schema(
   },
 );
 
-novelSchema.pre(/^find/, function(next) {
+novelSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'author',
-    select: 'name'
+    select: 'name',
   });
 
   next();
 });
 
-novelSchema.pre(/^find/, function(next) {
+novelSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'translator',
-    select: 'firstName lastName avatar'
-    });
+    select: 'firstName lastName avatar',
+  });
   next();
 });
 

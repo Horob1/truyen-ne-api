@@ -10,19 +10,21 @@ export const loginUser = async (req, res) => {
     const { password, username } = req.body;
     const user = await User.findOne({ username });
     if (!user) {
-      res.status(404).json('Username Not Found');
+      return res.status(404).json('Username Not Found');
     }
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-      res.status(401).json('Wrong Password');
+      return res.status(401).json('Wrong Password');
     }
     if (user && validPassword) {
       const accessToken = generateAccessToken(user);
       const refreshToken = generateRefreshToken(user);
 
       refreshTokens.push(refreshToken);
+      debugger;
+      res.cookie('user', 'john_doe', { maxAge: 3600000, httpOnly: true });
       res.cookie('refreshToken', refreshToken, {
-        httpOnly: true,
+        httpOnly: false,
         secure: false,
         path: '/',
         sameSite: 'strict',
