@@ -63,7 +63,7 @@ const novelSchema = new mongoose.Schema(
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  }
+  },
 );
 
 novelSchema.pre(/^find/, function (next) {
