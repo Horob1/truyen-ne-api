@@ -1,4 +1,3 @@
-
 let refreshTokens = [];
 
 export const logOut = async (req, res) => {
