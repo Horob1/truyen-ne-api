@@ -24,10 +24,6 @@ app.use(function (req, res, next) {
   );
   next();
 });
-app.options(
-  '*',
-  cors({ origin: 'http://localhost:5173', optionsSuccessStatus: 200 })
-);
 
 app.use(cors({ origin: 'http://localhost:5173', optionsSuccessStatus: 200 }));
 
