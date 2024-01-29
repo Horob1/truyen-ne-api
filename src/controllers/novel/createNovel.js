@@ -2,8 +2,15 @@ import Novel from '../../models/novelModel.js';
 
 export const createNovel = async (req, res, next) => {
   try {
-    const { name, description, debutDate, photo, categories, author } =
-      req.body;
+    const {
+      name,
+      description,
+      debutDate,
+      photo,
+      categories,
+      author,
+      coverImg,
+    } = req.body;
 
     const translator = req.user.id;
 

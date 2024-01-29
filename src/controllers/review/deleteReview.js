@@ -1,6 +1,5 @@
 import Novel from '../../models/novelModel.js';
 import Review from '../../models/reviewModel.js';
-import AppError from '../../utils/appError.js';
 
 export const deleteReview = async (req, res, next) => {
   try {
