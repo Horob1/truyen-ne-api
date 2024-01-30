@@ -15,7 +15,6 @@ export const createNovel = async (req, res, next) => {
       categories,
       translator,
       author,
-      coverImg,
     });
 
     await newNovel.save();
