@@ -22,6 +22,8 @@ import {
   getNovelList,
 } from '../controllers/novel/getNovelList.js';
 import { getNewChapterList } from '../controllers/chapter/getNewChapterList.js';
+import { getNovelBySlug } from '../controllers/novel/getNovelBySlug.js';
+import { getChapterBySlug } from '../controllers/chapter/getChapterBySlug.js';
 
 const router = Router();
 
@@ -31,8 +33,10 @@ router.route('/moi-ra-lo').get(getNewChapterList);
 router.route('/top-10-finished').get(getTop10Finished);
 router.route('/top-10-newest').get(getTop10Newest);
 //get a novel
-router.route('/:novelId').get(getNovelById);
-//get chapterList
+router.route('/id/:novelId').get(getNovelById);
+router.route('/slug/:slugNovel').get(getNovelBySlug);
+//get Chapter
+router.route('/:slugNovel/:slugChapter').get(getChapterBySlug);
 router.route('/:novelId/chapterList').get(getChapterList);
 //get review List
 router.route('/:novelId/review').get(getReviewList);

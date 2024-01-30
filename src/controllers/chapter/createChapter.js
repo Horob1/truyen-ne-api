@@ -3,21 +3,28 @@ import Novel from '../../models/novelModel.js';
 
 export const createChapter = async (req, res, next) => {
   try {
-    const user = await Novel.findById(req.params.novelId).select('translator')
-      .translator;
+    const user = await Novel.findById(req.params.novelId).select('translator');
+    const translatorId = user.translator.id;
 
     if (req.user.id !== translatorId)
-      return res.status(404).json({ status: 'permission denied' });
+      return res.status(403).json({ status: 'permission denied' }); // Sử dụng mã trạng thái 403 để biểu thị lỗi phân quyền
 
     const { name, content, number } = req.body;
     const translator = req.user.id;
     const novel = req.params.novelId;
-    const chapter = new Chapter({ name, content, novel, translator, number });
+    const chapter = new Chapter({
+      name,
+      content,
+      novel,
+      translator,
+      number,
+      slugChapter,
+    });
 
     await chapter.save();
 
     await Novel.findByIdAndUpdate(
-      req.params.id,
+      req.params.novelId,
       { $inc: { progress: 1 } },
       {
         new: true,
@@ -30,6 +37,6 @@ export const createChapter = async (req, res, next) => {
       chapter,
     });
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
   }
 };

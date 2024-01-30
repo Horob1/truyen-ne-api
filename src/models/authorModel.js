@@ -10,7 +10,13 @@ const authorSchema = new mongoose.Schema(
     description: String,
     avatar: {
       type: String,
-      default: '',
+      default: function () {
+        return process.env.AVT_DF_URL;
+      },
+    },
+    slugAuthor: {
+      type: String,
+      unique: true,
     },
   },
   {

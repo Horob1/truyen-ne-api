@@ -24,6 +24,9 @@ const chapterSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    slugChapter: {
+      type: String,
+    },
   },
   {
     toJSON: { virtuals: true },
