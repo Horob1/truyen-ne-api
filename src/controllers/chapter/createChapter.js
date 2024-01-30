@@ -3,8 +3,9 @@ import Novel from '../../models/novelModel.js';
 
 export const createChapter = async (req, res, next) => {
   try {
-    const user = await Novel.findById(req.params.novelId).select('translator')
-      .translator;
+    const user = await Novel.findById(req.params.novelId).select('translator');
+
+    const translatorId = user.translator.toString();
 
     if (req.user.id !== translatorId)
       return res.status(404).json({ status: 'permission denied' });
@@ -25,11 +26,11 @@ export const createChapter = async (req, res, next) => {
       }
     );
 
-    res.status(201).json({
+    return res.status(201).json({
       status: 'success',
       chapter,
     });
   } catch (error) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 };

@@ -6,13 +6,13 @@ export const getForumCommentList = async (req, res, next) => {
       forum: req.params.forumId,
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       result: commentList.length,
       commentList,
     });
   } catch (error) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 };
 

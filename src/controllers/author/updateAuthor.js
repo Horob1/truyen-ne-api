@@ -12,11 +12,13 @@ export const updateAuthor = async (req, res, next) => {
     });
 
     if (!author)
-      res.status(404).json({ status: 'fail', message: 'something was wrong' });
+      return res
+        .status(404)
+        .json({ status: 'fail', message: 'something was wrong' });
 
     author = await Author.findById(req.params.authorId);
 
-    res.status(201).json({
+    return res.status(201).json({
       status: 'success',
       author,
     });

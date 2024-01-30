@@ -10,11 +10,11 @@ export const createForumPost = async (req, res, next) => {
 
     await forumPost.save();
 
-    res.status(201).json({
+    return res.status(201).json({
       status: 'success',
       forumPost,
     });
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 };

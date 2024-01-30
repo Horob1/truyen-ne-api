@@ -21,8 +21,6 @@ export const loginUser = async (req, res) => {
       const refreshToken = generateRefreshToken(user);
 
       refreshTokens.push(refreshToken);
-      debugger;
-      res.cookie('user', 'john_doe', { maxAge: 3600000, httpOnly: true });
       res.cookie('refreshToken', refreshToken, {
         httpOnly: false,
         secure: false,

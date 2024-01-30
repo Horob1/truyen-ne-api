@@ -7,12 +7,12 @@ export const getLoveList = async (req, res, next) => {
       isLove: true,
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       result: loveList.length,
       loveList,
     });
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 };

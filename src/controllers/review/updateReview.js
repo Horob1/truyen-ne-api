@@ -19,7 +19,9 @@ export const updateReview = async (req, res, next) => {
     });
 
     if (!review)
-      res.status(404).json({ status: 'fail', message: 'something was wrong' });
+      return res
+        .status(404)
+        .json({ status: 'fail', message: 'something was wrong' });
 
     review = await Review.findById(req.params.reviewId);
 
@@ -34,8 +36,6 @@ export const updateReview = async (req, res, next) => {
 
       thisNovel.rateAvg = thisNovel.rateSum / thisNovel.reviewsQuan;
       await thisNovel.save();
-
-      console.log(thisNovel);
     }
 
     res.status(201).json({

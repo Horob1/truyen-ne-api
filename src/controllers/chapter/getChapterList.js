@@ -7,12 +7,12 @@ export const getChapterList = async (req, res, next) => {
       .select('name _id number createTime')
       .sort('number');
 
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       result: chapterList.length,
       chapterList,
     });
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 };

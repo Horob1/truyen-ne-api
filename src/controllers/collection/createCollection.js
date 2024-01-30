@@ -10,16 +10,18 @@ export const createCollection = async (req, res, next) => {
     const collection = new Collection({ isLove, novel, user });
 
     if (!collection) {
-      res.status(404).json({ status: 'fail', message: 'something was wrong' });
+      return res
+        .status(404)
+        .json({ status: 'fail', message: 'something was wrong' });
     }
 
     await collection.save();
 
-    res.status(201).json({
+    return res.status(201).json({
       status: 'success',
       collection,
     });
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 };

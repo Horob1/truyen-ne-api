@@ -23,11 +23,11 @@ export const createCommentChapter = async (req, res, next) => {
 
     await comment.save();
 
-    res.status(201).json({
+    return res.status(201).json({
       status: 'success',
       comment,
     });
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 };

@@ -19,14 +19,14 @@ export const updateComment = async (req, res, next) => {
       {
         new: true,
         runValidators: true,
-      },
+      }
     );
 
-    res.status(201).json({
+    return res.status(201).json({
       status: 'success',
       comment,
     });
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 };

@@ -8,11 +8,11 @@ export const createCategory = async (req, res, nexy) => {
 
     await category.save();
 
-    res.status(201).json({
+    return res.status(201).json({
       status: 'success',
       category,
     });
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 };

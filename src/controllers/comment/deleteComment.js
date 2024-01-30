@@ -11,10 +11,10 @@ export const deleteComment = async (req, res, next) => {
 
     await Comment.findByIdAndDelete(req.params.commentId);
 
-    res.status(205).json({
+    return res.status(205).json({
       status: 'success',
     });
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 };
