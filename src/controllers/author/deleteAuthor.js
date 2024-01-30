@@ -6,15 +6,18 @@ export const deleteAuthor = async (req, res, next) => {
     const author = await Author.findByIdAndDelete(req.params.authorId);
 
     if (!author)
-      res.status(404).json({ status: 'fail', message: 'something was wrong' });
+      return res
+        .status(404)
+        .json({ status: 'fail', message: 'something was wrong' });
 
     await Novel.updateMany(
       { author: req.params.authorId },
       { $set: { author: null } }
     );
 
-    res.status(205).json({
+    return res.status(200).json({
       status: 'success',
+      message: 'deleted',
     });
   } catch (error) {
     res.status(500).json(error);

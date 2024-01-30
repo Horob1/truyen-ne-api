@@ -59,11 +59,15 @@ const novelSchema = new mongoose.Schema(
       type: String,
       default: 0,
     },
+    slugNovel: {
+      type: String,
+      unique: true,
+    },
   },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  },
+  }
 );
 
 novelSchema.pre(/^find/, function (next) {

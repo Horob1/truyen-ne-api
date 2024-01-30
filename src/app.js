@@ -15,7 +15,9 @@ import forumRouter from './routes/forum.js';
 import commentRouter from './routes/comment.js';
 import { Server as socketIo } from 'socket.io';
 import http from 'http';
+import configureCloudinary from './configCloud.js';
 
+configureCloudinary();
 const app = express();
 const server = http.createServer(app);
 const io = new socketIo(server);

@@ -34,7 +34,9 @@ const userSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      default: '',
+      default: function () {
+        return process.env.AVT_DF_URL;
+      },
     },
     password: {
       type: String,

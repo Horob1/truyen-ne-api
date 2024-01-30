@@ -11,7 +11,7 @@ export const requestRefreshToken = async (req, res) => {
 
   jwt.verify(refreshToken, process.env.SECRET_REFRESH_TOKEN, (err, user) => {
     if (err) {
-      console.log(err);
+      return res.status(500).json(err);
     }
     refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
 
