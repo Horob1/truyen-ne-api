@@ -4,7 +4,7 @@ export const getCollection = async (req, res, next) => {
   try {
     const collection = await Collection.findOne({
       user: req.user.id,
-      novel: req.params.novelId
+      novel: req.params.novelId,
     });
 
     res.status(200).json({
