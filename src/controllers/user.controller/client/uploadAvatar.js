@@ -1,21 +1,23 @@
 import { v2 as cloudinary } from 'cloudinary';
 import User from '../../../models/userModel.js';
-import fs from 'fs';
 
 export const uploadAvatar = async (req, res) => {
   try {
-    const tempPath = req.file.path;
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+    const result = await cloudinary.uploader.upload(req.file.path);
+    console.log(result);
 
-    const result = await cloudinary.uploader.upload(tempPath, {
-      folder: 'avatars',
-    });
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      { avatar: result.secure_url },
+      { new: true }
+    );
 
-    await User.findByIdAndUpdate(userId, { avatar: result.secure_url });
-
-    fs.unlinkSync(tempPath);
-
-    res.status(200).json({ message: 'Avatar uploaded successfully' });
+    res.status(200).json({ imageUrl: result.secure_url });
   } catch (error) {
-    res.status(500).json({ error: 'Error uploading avatar' });
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
   }
 };

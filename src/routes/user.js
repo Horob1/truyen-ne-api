@@ -4,9 +4,7 @@ import { changePassword } from '../controllers/user.controller/client/changePass
 import { logOut } from '../controllers/user.controller/client/logOut.js';
 import { getProfile } from '../controllers/user.controller/client/getProfile.js';
 import { uploadAvatar } from '../controllers/user.controller/client/uploadAvatar.js';
-import multer from 'multer';
-const upload = multer({ dest: 'uploads/' });
-
+import { upload } from '../configCloud.js';
 const router = Router();
 
 router.post('/change-password', checkJWT, changePassword);
