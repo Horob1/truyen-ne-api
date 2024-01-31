@@ -11,8 +11,7 @@ export const updateNovel = async (req, res, next) => {
       return res.status(404).json({ status: 'permission denied' });
     }
 
-    const { name, description, debutDate, photo, categories, coverImg } =
-      req.body;
+    const { name, description, photo, categories, coverImg } = req.body;
 
     let author = req.body.author;
 
@@ -37,7 +36,9 @@ export const updateNovel = async (req, res, next) => {
     );
 
     if (!novel)
-      res.status(404).json({ status: 'fail', message: 'something was wrong' });
+      return res
+        .status(404)
+        .json({ status: 'fail', message: 'something was wrong' });
 
     // Kiểm tra xem có file coverImg được upload không
     if (req.files['coverImg']) {

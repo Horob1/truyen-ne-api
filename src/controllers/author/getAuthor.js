@@ -1,15 +1,19 @@
 import Author from '../../models/authorModel.js';
 import Novel from '../../models/novelModel.js';
 
-export const getAuthor = async (req, res, next) => {
+export const getAuthor= async (req, res, next) => {
   try {
-    const author = await Author.findById(req.params.authorId);
+    //TODO:
+    const query = req.query.q;
+    const author = await Author.find(query);
 
     if (!author)
-      res.status(404).json({ status: 'fail', message: 'something was wrong' });
+      return res
+        .status(404)
+        .json({ status: 'fail', message: 'Author not found' });
 
-    //query novel of author
-    const novels = await Novel.find({ author: req.params.authorId });
+    // Truy vấn tiểu thuyết của tác giả sử dụng _id của tác giả
+    const novels = await Novel.find({ author: author._id });
 
     author.novels = novels;
 
