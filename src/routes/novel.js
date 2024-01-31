@@ -1,11 +1,5 @@
 import { Router } from 'express';
 import { getNovelById } from '../controllers/novel/getNovelById.js';
-import { getChapter } from '../controllers/chapter/getChapter.js';
-import { getChapterList } from '../controllers/chapter/getChapterList.js';
-import { getReviewList } from '../controllers/review/getReviewList.js';
-import { deleteChapter } from '../controllers/chapter/deleteChapter.js';
-import { updateChapter } from '../controllers/chapter/updateChapter.js';
-import { createChapter } from '../controllers/chapter/createChapter.js';
 import { createNovel } from '../controllers/novel/createNovel.js';
 import { updateNovel } from '../controllers/novel/updateNovel.js';
 import { deleteNovel } from '../controllers/novel/deleteNovel.js';
