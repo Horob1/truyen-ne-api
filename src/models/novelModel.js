@@ -101,6 +101,11 @@ novelSchema.pre('save', function (next) {
   next();
 });
 
+novelSchema.pre('save', function (next) {
+  this.slug = removeAccents(this.name.toLowerCase().split(' ').join('-'));
+  next();
+});
+
 const Novel = mongoose.model('Novel', novelSchema);
 
 export default Novel;
