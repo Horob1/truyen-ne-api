@@ -2,10 +2,10 @@ import mongoose from 'mongoose';
 
 const commentSchema = new mongoose.Schema(
   {
-    content: String,
+    content: { type: String, trim: true },
     user: { type: mongoose.Schema.ObjectId, ref: 'User' },
     reply: { type: mongoose.Schema.ObjectId, ref: 'Comment' },
-    forum: { type: mongoose.Schema.ObjectId, ref: 'Forum' },
+    // forum: { type: mongoose.Schema.ObjectId, ref: 'Forum' },
     novel: { type: mongoose.Schema.ObjectId, ref: 'Novel' },
     chapter: { type: mongoose.Schema.ObjectId, ref: 'Chapter' },
     isReply: { type: Boolean, default: false },
@@ -17,7 +17,7 @@ const commentSchema = new mongoose.Schema(
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  },
+  }
 );
 
 commentSchema.pre(/^find/, function (next) {

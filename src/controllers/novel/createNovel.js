@@ -12,6 +12,7 @@ export const createNovel = async (req, res) => {
       name,
       description,
       debutDate,
+      photo,
       categories,
       translator,
       author,

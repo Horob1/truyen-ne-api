@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const reviewSchema = new mongoose.Schema(
   {
-    content: String,
+    content: { type: String, trim: true },
     user: { type: mongoose.Schema.ObjectId, ref: 'User' },
     novel: { type: mongoose.Schema.ObjectId, ref: 'Novel' },
     rate: {
@@ -21,10 +21,10 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
-reviewSchema.pre(/^find/, function(next) {
+reviewSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'user',
-    select: 'firstName lastName avatar'
+    select: 'firstName lastName avatar',
   });
 
   next();
