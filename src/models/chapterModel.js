@@ -24,7 +24,7 @@ const chapterSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    slugChapter: {
+    slug: {
       type: String,
     },
   },
@@ -33,6 +33,11 @@ const chapterSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+
+chapterSchema.pre('save', function (next) {
+  this.slug = `chuong ${this.number}`;
+  next();
+});
 
 const Chapter = mongoose.model('Chapter', chapterSchema);
 

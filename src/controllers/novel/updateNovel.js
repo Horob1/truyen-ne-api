@@ -25,7 +25,6 @@ export const updateNovel = async (req, res, next) => {
       {
         name,
         description,
-        debutDate,
         photo,
         categories,
         author,

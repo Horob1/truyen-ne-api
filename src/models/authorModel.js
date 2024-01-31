@@ -14,7 +14,7 @@ const authorSchema = new mongoose.Schema(
         return process.env.AVT_DF_URL;
       },
     },
-    slugAuthor: {
+    slug: {
       type: String,
       unique: true,
     },
@@ -24,6 +24,11 @@ const authorSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+
+authorSchema.pre('save', function (next) {
+  this.slug = this.name.split(' ').join('-');
+  next();
+});
 
 const Author = mongoose.model('Author', authorSchema);
 

@@ -15,7 +15,6 @@ export const createNovel = async (req, res) => {
       categories,
       translator,
       author,
-      slugNovel,
     });
 
     // Kiểm tra xem có file coverImg được upload không

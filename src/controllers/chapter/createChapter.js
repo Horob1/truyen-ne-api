@@ -18,7 +18,6 @@ export const createChapter = async (req, res, next) => {
       novel,
       translator,
       number,
-      slugChapter,
     });
 
     await chapter.save();
