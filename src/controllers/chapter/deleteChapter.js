@@ -14,9 +14,6 @@ export const deleteChapter = async (req, res, next) => {
       req.params.chapterId
     );
 
-    if (!deletedChapter)
-      res.status(404).json({ status: 'fail', message: 'something was wrong' });
-
     await Novel.findByIdAndUpdate(
       req.params.novelId,
       { $inc: { progress: -1 } },
@@ -26,9 +23,7 @@ export const deleteChapter = async (req, res, next) => {
       }
     );
 
-    res.status(205).json({
-      status: 'success',
-    });
+    res.status(205).json({});
   } catch (error) {
     res.status(500).json(error);
   }

@@ -9,7 +9,7 @@ export const updateNovel = async (req, res, next) => {
     if (req.user.id !== translatorId)
       return res.status(404).json({ status: 'permission denied' });
 
-    const { name, description, debutDate, photo, categories, coverImg } =
+    const { name, description, photo, categories, coverImg } =
       req.body;
 
     let author = req.body.author;
@@ -17,6 +17,8 @@ export const updateNovel = async (req, res, next) => {
     if (req.body.isMine) {
       author = undefined;
     }
+
+    
     let novel = await Novel.findByIdAndUpdate(
       req.params.novelId,
       {
@@ -34,7 +36,9 @@ export const updateNovel = async (req, res, next) => {
     );
 
     if (!novel)
-      res.status(404).json({ status: 'fail', message: 'something was wrong' });
+      return res
+        .status(404)
+        .json({ status: 'fail', message: 'something was wrong' });
 
     novel = await Novel.findById(req.params.novelId);
 

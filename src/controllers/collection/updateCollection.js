@@ -2,18 +2,24 @@ import Collection from '../../models/collectionModel.js';
 
 export const updateCollection = async (req, res, next) => {
   try {
-    const { isLove } = req.body;
+    const user = req.user.id;
+    const novel = req.params.novelId;
+    const isLove = req.body.isLove;
+    const query = { novel, user };
+    const update = { user, novel, isLove };
+    const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
-    const collection = await Collection.findByIdAndUpdate(
-      req.params.collectionId,
-      { isLove }
+
+    const collection = await Collection.findOneAndUpdate(
+      query,
+      update,
+      options,
+      function (error, result) {
+        if (error) return;
+
+        // do something with the document
+      }
     );
-
-    if (!collection) {
-      res.status(404).json({ status: 'fail', message: 'something was wrong' });
-    }
-
-    collection.isLove = isLove;
 
     res.status(201).json({
       status: 'success',

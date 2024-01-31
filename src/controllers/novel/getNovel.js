@@ -1,12 +1,13 @@
 import Novel from '../../models/novelModel.js';
 
-export const getNovelById = async (req, res, next) => {
+export const getNovel = async (req, res, next) => {
   try {
-    const novel = await Novel.findById(req.params.novelId);
-
+    //TODO:
+    const query = req.query.q;
+    const novels = Novel.find(query);
     res.status(200).json({
       status: 'success',
-      novel,
+      novels,
     });
   } catch (error) {
     res.status(500).json(error);
