@@ -1,20 +1,22 @@
 import mongoose from 'mongoose';
+import removeAccents from './../utils/removeAccents.js';
 
 const novelSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: [true, 'Novel must have a name!'],
+      trim: true,
     },
     description: {
       type: String,
       default: 'Chưa có mô tả!',
+      trim: true,
     },
     createTime: {
       type: Date,
       default: Date.now,
     },
-    debutDate: Date,
     status: {
       type: String,
       enum: ['Bỏ dở', 'Chưa hoàn thành', 'Hoàn thành'],
@@ -57,9 +59,9 @@ const novelSchema = new mongoose.Schema(
     },
     coverImg: {
       type: String,
-      default: 0,
+      default: '',
     },
-    slugNovel: {
+    slug: {
       type: String,
       unique: true,
     },
@@ -84,6 +86,11 @@ novelSchema.pre(/^find/, function (next) {
     path: 'translator',
     select: 'firstName lastName avatar',
   });
+  next();
+});
+
+novelSchema.pre('save', function (next) {
+  this.slug = removeAccents(this.name.toLowerCase().split(' ').join('-'));
   next();
 });
 
