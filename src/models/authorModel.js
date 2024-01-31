@@ -31,7 +31,6 @@ authorSchema.pre('save', function (next) {
   this.slug = removeAccents(this.name.toLowerCase().split(' ').join('-'));
   next();
 });
-
 const Author = mongoose.model('Author', authorSchema);
 
 export default Author;
