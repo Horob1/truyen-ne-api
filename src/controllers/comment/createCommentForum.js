@@ -1,19 +1,19 @@
 import Comment from '../../models/commentModel.js';
-import Forum from '../../models/forumModel.js';
+// import Forum from '../../models/forumModel.js';
 
 export const createCommentForum = async (req, res, next) => {
   try {
     const { content, reply, novel } = req.body;
 
-    const forum = req.params.forumId;
+    // const forum = req.params.forumId;
 
     const user = req.user.id;
 
-    const forumPost = await Forum.findById(forum);
+    // const forumPost = await Forum.findById(forum);
 
-    if (forumPost.isClose) {
-      return res.status(404).json({ status: 'fail', message: 'post is close' });
-    }
+    // if (forumPost.isClose) {
+    //   return res.status(404).json({ status: 'fail', message: 'post is close' });
+    // }
 
     let isReply = false;
 
@@ -23,7 +23,7 @@ export const createCommentForum = async (req, res, next) => {
       content,
       user,
       reply,
-      forum,
+      // forum,
       novel,
       isReply,
     });

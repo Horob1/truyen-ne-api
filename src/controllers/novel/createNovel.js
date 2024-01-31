@@ -10,7 +10,6 @@ export const createNovel = async (req, res, next) => {
     const newNovel = new Novel({
       name,
       description,
-      debutDate,
       photo,
       categories,
       translator,

@@ -2,7 +2,7 @@ import Novel from '../../models/novelModel.js';
 import Chapter from '../../models/chapterModel.js';
 import Collection from '../../models/collectionModel.js';
 import Comment from '../../models/commentModel.js';
-import Forum from '../../models/forumModel.js';
+// import Forum from '../../models/forumModel.js';
 import Review from '../../models/reviewModel.js';
 
 export const deleteNovel = async (req, res, next) => {
@@ -17,7 +17,7 @@ export const deleteNovel = async (req, res, next) => {
     await Chapter.deleteMany({ novel: req.params.novelId });
     await Collection.deleteMany({ novel: req.params.novelId });
     await Comment.deleteMany({ novel: req.params.novelId });
-    await Forum.deleteMany({ novel: req.params.novelId });
+    // await Forum.deleteMany({ novel: req.params.novelId });
     await Review.deleteMany({ novel: req.params.novelId });
 
     await Novel.findByIdAndDelete(req.params.novelId);
