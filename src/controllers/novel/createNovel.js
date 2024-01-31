@@ -3,8 +3,8 @@ import Novel from '../../models/novelModel.js';
 
 export const createNovel = async (req, res) => {
   try {
-    const { name, description, debutDate, categories, author, slugNovel } =
-      req.body;
+    const { name, description, photo, categories, author } = req.body;
+
     const translator = req.user.id;
 
     // Tạo mới đối tượng Novel
