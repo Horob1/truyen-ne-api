@@ -9,6 +9,7 @@ export const getChapter = async (req, res, next) => {
 
     res.status(200).json({
       status: 'success',
+      length: chapter.length,
       chapter,
     });
   } catch (error) {

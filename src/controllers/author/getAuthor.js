@@ -9,6 +9,7 @@ export const getAuthor = async (req, res, next) => {
 
     res.status(200).json({
       status: 'success',
+      length: author.length,
       author,
     });
   } catch (error) {
