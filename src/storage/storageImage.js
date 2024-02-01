@@ -12,7 +12,7 @@ const cloudinaryStorage = new CloudinaryStorage({
 export const storageCoverImage = new CloudinaryStorage({
   cloudinary: configureCloudinary(),
   params: {
-    folder: 'coverImg', // Thư mục trên Cloudinary để lưu trữ ảnh
+    folder: 'Data/coverImg', // Thư mục trên Cloudinary để lưu trữ ảnh
     allowed_formats: ['jpg', 'jpeg', 'png'], // Định dạng file cho phép
   },
 });
@@ -20,7 +20,7 @@ export const storageCoverImage = new CloudinaryStorage({
 export const storagePhoto = new CloudinaryStorage({
   cloudinary: configureCloudinary(),
   params: {
-    folder: 'photo', // Thư mục trên Cloudinary để lưu trữ ảnh
+    folder: 'Data/photo', // Thư mục trên Cloudinary để lưu trữ ảnh
     allowed_formats: ['jpg', 'jpeg', 'png'], // Định dạng file cho phép
   },
 });

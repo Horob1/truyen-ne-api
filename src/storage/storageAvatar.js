@@ -4,7 +4,7 @@ import multer from 'multer';
 export const storageUser = new CloudinaryStorage({
   cloudinary: configureCloudinary(),
   params: {
-    folder: 'avatars', // Thư mục trên Cloudinary để lưu trữ ảnh
+    folder: 'Data/avatars', // Thư mục trên Cloudinary để lưu trữ ảnh
     allowed_formats: ['jpg', 'jpeg', 'png'], // Định dạng file cho phép
   },
 });

@@ -1,5 +1,4 @@
 import User from '../../../models/userModel.js';
-import avatarInitials from 'avatar-initials';
 import { v2 as cloudinary } from 'cloudinary';
 export const register = async (req, res) => {
   try {
@@ -14,6 +13,11 @@ export const register = async (req, res) => {
       password,
       passwordConfirm,
     });
+
+    if (req.file) {
+      const avatar = await cloudinary.uploader.upload(req.file.path);
+      user.avatar = avatar.secure_url;
+    }
 
     await user.save();
     console.log(user);

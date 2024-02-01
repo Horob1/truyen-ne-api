@@ -1,13 +1,15 @@
+import { v2 as cloudinary } from 'cloudinary';
 import Novel from '../../models/novelModel.js';
 
 export const updateNovel = async (req, res, next) => {
   try {
-    const user = await Novel.findById(req.params.novelId).select('translator');
+    const user = await Novel.findById(req.params.novelId);
 
-    const translatorId = user.translator.toString();
+    const translatorId = user.translator.id;
 
-    if (req.user.id !== translatorId)
+    if (req.user.id !== translatorId) {
       return res.status(404).json({ status: 'permission denied' });
+    }
 
     const { name, description, debutDate, photo, categories, coverImg } =
       req.body;
@@ -17,6 +19,7 @@ export const updateNovel = async (req, res, next) => {
     if (req.body.isMine) {
       author = undefined;
     }
+
     let novel = await Novel.findByIdAndUpdate(
       req.params.novelId,
       {
@@ -37,7 +40,19 @@ export const updateNovel = async (req, res, next) => {
     if (!novel)
       res.status(404).json({ status: 'fail', message: 'something was wrong' });
 
-    novel = await Novel.findById(req.params.novelId);
+    if (req.files && req.files.length === 2) {
+      // Nếu có, thực hiện upload ảnh cover và photo lên Cloudinary
+      const coverImg = await cloudinary.uploader.upload(req.files[0].path, {
+        folder: 'Data/coverImg',
+      });
+      const photo = await cloudinary.uploader.upload(req.files[1].path, {
+        folder: 'Data/photo',
+      });
+
+      // Cập nhật URL ảnh vào đối tượng Novel
+      novel.coverImg = coverImg.secure_url;
+      novel.photo = photo.secure_url;
+    }
 
     res.status(201).json({
       status: 'success',
