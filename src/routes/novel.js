@@ -19,6 +19,19 @@ import { deleteNovel } from '../controllers/novel/deleteNovel.js';
 import { createReview } from '../controllers/review/createReview.js';
 import { updateReview } from '../controllers/review/updateReview.js';
 import { deleteReview } from '../controllers/review/deleteReview.js';
+import {
+  getTop10View,
+  getTop10Finished,
+  getTop10Newest,
+  getNovelList,
+} from '../controllers/novel/getNovelList.js';
+import { getNewChapterList } from '../controllers/chapter/getNewChapterList.js';
+import { getNovelBySlug } from '../controllers/novel/getNovelBySlug.js';
+import { getChapterBySlug } from '../controllers/chapter/getChapterBySlug.js';
+import { upload, uploadImg, uploadPhoto } from '../storage/storageImage.js';
+import { uploadImages } from '../controllers/novel/uploadImg.js';
+import { uploadPhotos } from '../controllers/novel/uploadPhoto.js';
+
 const router = Router();
 
 router.route('/').get(getNovel);
