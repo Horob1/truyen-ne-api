@@ -1,5 +1,3 @@
-export const LIMIT = 10;
-
 class APIFeatures {
   constructor(data, query) {
     this.data = data;
@@ -9,18 +7,10 @@ class APIFeatures {
   filter() {
     const queryOBJ = { ...this.query };
 
-    //1 sub page, limit, sort, fields form query
-    const specialParams = ['sort', 'fields', 'page', 'limit'];
-    specialParams.forEach((el) => delete queryOBJ[el]);
-    //2 better query
-    let querySTR = JSON.stringify(queryOBJ);
-    querySTR = querySTR.replace(
-      `/\b(gte|gt|lte|lt)\b/g`,
-      (match) => `$${match}`
-    );
-
-    this.data.find(JSON.parse(querySTR));
-
+    const q = queryOBJ?.q;
+    console.log(q);
+    if (q) this.data = this.data.find(JSON.parse(q));
+    else this.data = this.data.find();
     return this;
   }
   //sort
@@ -28,9 +18,9 @@ class APIFeatures {
   sort() {
     if (this.query.sort) {
       const sortBy = this.query.sort.split(',').join(' ');
-      this.data.sort(sortBy);
+      this.data = this.data.sort(sortBy);
     } else {
-      this.data.sort('-createAt');
+      this.data = this.data.sort('-createAt');
     }
 
     return this;
