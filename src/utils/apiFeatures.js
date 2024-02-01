@@ -6,11 +6,23 @@ class APIFeatures {
 
   filter() {
     const queryOBJ = { ...this.query };
-
     const q = queryOBJ?.q;
-    console.log(q);
     if (q) this.data = this.data.find(JSON.parse(q));
-    else this.data = this.data.find();
+    else {
+      const specialParams = ['sort', 'fields', 'page', 'limit'];
+      specialParams.forEach((el) => delete queryOBJ[el]);
+      //2 better query
+      let querySTR = JSON.stringify(queryOBJ);
+      querySTR = querySTR.replace(
+        `/\b(gte|gt|lte|lt)\b/g`,
+        (match) => `$${match}`
+      );
+
+      this.data = this.data.find(JSON.parse(querySTR));
+    }
+
+    //1 sub page, limit, sort, fields form query
+
     return this;
   }
   //sort
