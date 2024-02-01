@@ -1,5 +1,11 @@
 import { Router } from 'express';
 import { getNovelById } from '../controllers/novel/getNovelById.js';
+import { getChapter } from '../controllers/chapter/getChapter.js';
+import { getChapterList } from '../controllers/chapter/getChapterList.js';
+import { getReviewList } from '../controllers/review/getReviewList.js';
+import { deleteChapter } from '../controllers/chapter/deleteChapter.js';
+import { updateChapter } from '../controllers/chapter/updateChapter.js';
+import { createChapter } from '../controllers/chapter/createChapter.js';
 import { createNovel } from '../controllers/novel/createNovel.js';
 import { updateNovel } from '../controllers/novel/updateNovel.js';
 import { deleteNovel } from '../controllers/novel/deleteNovel.js';
@@ -43,24 +49,10 @@ router.route('/:novelId/review').get(getReviewList);
 router.route('/:novelId/:chapterId').get(checkUser, getChapter);
 //admin or translator
 router.use(checkJWT, rejectUser);
-router.post(
-  '/',
-  upload.fields([
-    { name: 'coverImg', maxCount: 1 },
-    { name: 'photo', maxCount: 1 },
-  ]),
-  createNovel
-);
 
-router.patch(
-  '/:novelId',
-  upload.fields([
-    { name: 'coverImg', maxCount: 1 },
-    { name: 'photo', maxCount: 1 },
-  ]),
-  updateNovel
-);
-router.delete('/:novelId', deleteNovel);
+router.route('/').post(createNovel);
+
+router.route('/:novelId').patch(updateNovel).delete(deleteNovel);
 
 //post a review
 router.route('/:novelId/review').post(createReview);
