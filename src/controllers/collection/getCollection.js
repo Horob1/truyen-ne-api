@@ -2,7 +2,6 @@ import Collection from '../../models/collectionModel.js';
 
 export const getCollection = async (req, res, next) => {
   try {
-    //TODO:
     const collection = await Collection.findOne({
       user: req.user.id,
       novel: req.params.novelId
