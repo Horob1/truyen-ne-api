@@ -1,21 +1,11 @@
 import Author from '../../models/authorModel.js';
-import Novel from '../../models/novelModel.js';
+import APIFeatures from '../../utils/apiFeatures.js';
 
-export const getAuthor= async (req, res, next) => {
+export const getAuthor = async (req, res, next) => {
   try {
-    //TODO:
-    const query = req.query.q;
-    const author = await Author.find(query);
-
-    if (!author)
-      return res
-        .status(404)
-        .json({ status: 'fail', message: 'Author not found' });
-
-    // Truy vấn tiểu thuyết của tác giả sử dụng _id của tác giả
-    const novels = await Novel.find({ author: author._id });
-
-    author.novels = novels;
+    const features = new APIFeatures(Author.find(), req.query);
+    features.filter().paginate().sort().limitFields();
+    const author = await features.data;
 
     res.status(200).json({
       status: 'success',

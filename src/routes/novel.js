@@ -60,6 +60,12 @@ router
   .route('/:novelId/review/:reviewId')
   .patch(updateReview)
   .delete(deleteReview);
+//admin or translator
+router.use(rejectUser);
+
+router.route('/').post(createNovel);
+
+router.route('/:novelId').patch(updateNovel).delete(deleteNovel);
 
 //create chapter
 router.route('/:novelId').post(createChapter);
