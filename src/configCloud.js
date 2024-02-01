@@ -1,6 +1,4 @@
 import { v2 as cloudinary } from 'cloudinary';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
-import multer from 'multer';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: './src/config.env' });
@@ -13,13 +11,3 @@ export const configureCloudinary = () => {
   });
   return cloudinary;
 };
-
-export const storage = new CloudinaryStorage({
-  cloudinary: configureCloudinary(),
-  params: {
-    folder: 'avatars', // Thư mục trên Cloudinary để lưu trữ ảnh
-    allowed_formats: ['jpg', 'jpeg', 'png'], // Định dạng file cho phép
-  },
-});
-
-export const upload = multer({ storage: storage });

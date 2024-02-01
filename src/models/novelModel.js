@@ -53,7 +53,7 @@ const novelSchema = new mongoose.Schema(
     },
     love: {
       type: Number,
-      default: 0,
+      default: '',
     },
     coverImg: {
       type: String,

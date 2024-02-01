@@ -1,16 +1,16 @@
 import { v2 as cloudinary } from 'cloudinary';
-import User from '../../../models/userModel.js';
+import Novel from '../../models/novelModel.js';
 
-export const uploadAvatar = async (req, res) => {
+export const uploadImages = async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ message: 'No file uploaded' });
     }
     const result = await cloudinary.uploader.upload(req.file.path);
 
-    const user = await User.findByIdAndUpdate(
-      req.user.id,
-      { avatar: result.secure_url },
+    const novel = await Novel.findByIdAndUpdate(
+      req.params.id,
+      { coverImg: result.secure_url },
       { new: true }
     );
 
