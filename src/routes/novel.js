@@ -24,7 +24,7 @@ import {
 import { getNewChapterList } from '../controllers/chapter/getNewChapterList.js';
 import { getNovelBySlug } from '../controllers/novel/getNovelBySlug.js';
 import { getChapterBySlug } from '../controllers/chapter/getChapterBySlug.js';
-import { uploadImg, uploadPhoto } from '../storage/storageImage.js';
+import { upload, uploadImg, uploadPhoto } from '../storage/storageImage.js';
 import { uploadImages } from '../controllers/novel/uploadImg.js';
 import { uploadPhotos } from '../controllers/novel/uploadPhoto.js';
 
@@ -50,8 +50,7 @@ router.use(checkJWT, rejectUser);
 
 router.post('/image/:id', uploadImg.single('coverImg'), uploadImages);
 router.post('/photo/:id', uploadPhoto.single('photo'), uploadPhotos);
-
-router.route('/').post(createNovel);
+router.post('/', upload.array('images', 2), createNovel);
 
 router.route('/:novelId').patch(updateNovel).delete(deleteNovel);
 
