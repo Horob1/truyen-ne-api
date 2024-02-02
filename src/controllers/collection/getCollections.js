@@ -11,7 +11,9 @@ export const getCollections = async (req, res, next) => {
       req.query
     );
     features.filter().paginate().sort().limitFields();
-    const collection = await features.data;
+    const collection = await features.data
+      .populate({ path: 'novel' })
+      .populate({ path: 'chapter' });
 
     res.status(200).json({
       status: 'success',

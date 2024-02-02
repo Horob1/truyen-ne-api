@@ -12,6 +12,10 @@ export const createChapter = async (req, res, next) => {
     const { name, content, number } = req.body;
     const translator = req.user.id;
     const novel = req.params.novelId;
+
+    if (!(await Novel.findById(novel)))
+      return res.status(404).json({ status: 'ko có truyện này' });
+
     const chapter = new Chapter({
       name,
       content,

@@ -35,7 +35,7 @@ const novelSchema = new mongoose.Schema(
       ref: 'User',
       required: [true, 'Novel must have a name!'],
     },
-    author: { type: mongoose.Schema.ObjectId, ref: 'translator' },
+    author: { type: mongoose.Schema.ObjectId, ref: 'Author' },
     categories: [{ type: mongoose.Schema.ObjectId, ref: 'Category' }],
     reviewsQuan: {
       type: Number,
@@ -81,13 +81,20 @@ novelSchema.pre(/^find/, function (next) {
   next();
 });
 
-novelSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: 'translator',
-    select: 'firstName lastName avatar',
-  });
-  next();
-});
+// novelSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: 'translator',
+//     select: 'firstName lastName avatar',
+//   });
+//   next();
+// });
+
+// novelSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: 'categories',
+//   });
+//   next();
+// });
 
 novelSchema.pre('save', function (next) {
   this.slug = removeAccents(this.name.toLowerCase().split(' ').join('-'));

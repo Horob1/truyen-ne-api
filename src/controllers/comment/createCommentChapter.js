@@ -1,3 +1,4 @@
+import Chapter from '../../models/chapterModel.js';
 import Comment from '../../models/commentModel.js';
 
 export const createCommentChapter = async (req, res, next) => {
@@ -8,6 +9,8 @@ export const createCommentChapter = async (req, res, next) => {
     let isReply = false;
 
     const chapter = req.params.chapterId;
+    if (!(await Chapter.findById(chapter)))
+      return res.status(404).json({ status: 'ko có truyện này' });
 
     if (reply) {
       isReply = true;

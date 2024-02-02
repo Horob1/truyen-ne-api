@@ -1,4 +1,5 @@
 import Collection from '../../models/collectionModel.js';
+import Novel from '../../models/novelModel.js';
 
 export const updateCollection = async (req, res, next) => {
   try {
@@ -8,17 +9,13 @@ export const updateCollection = async (req, res, next) => {
     const query = { novel, user };
     const update = { user, novel, isLove };
     const options = { upsert: true, new: true, setDefaultsOnInsert: true };
-
+    if (!(await Novel.findById(novel)))
+      return res.status(404).json({ status: 'ko có truyện này' });
 
     const collection = await Collection.findOneAndUpdate(
       query,
       update,
-      options,
-      function (error, result) {
-        if (error) return;
-
-        // do something with the document
-      }
+      options
     );
 
     res.status(201).json({
@@ -26,6 +23,7 @@ export const updateCollection = async (req, res, next) => {
       collection,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json(error);
   }
 };

@@ -5,8 +5,12 @@ export const getChapter = async (req, res, next) => {
   try {
     const features = new APIFeatures(Chapter.find(), req.query);
     features.filter().paginate().sort().limitFields();
-    const chapter = await features.data;
-
+    const chapter = await features.data
+      .populate({
+        path: 'translator',
+        select: 'firstName lastName',
+      })
+      .populate({ path: 'novel', select: 'name author slug' });
     res.status(200).json({
       status: 'success',
       length: chapter.length,

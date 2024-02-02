@@ -22,11 +22,11 @@ import { deleteReview } from '../controllers/review/deleteReview.js';
 const router = Router();
 
 router.route('/').get(getNovel);
-
+router.route('/chapter').get(getChapter);
 //get a novel
 router.route('/:novelId').get(getNovelById);
 //get Chapter
-router.route('/:novelId/chapter').get(getChapter);
+
 router.route('/:novelId/chapterList').get(getChapterList);
 //get review List
 router.route('/:novelId/review').get(getReviewList);

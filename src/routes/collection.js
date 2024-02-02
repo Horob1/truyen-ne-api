@@ -12,14 +12,14 @@ const router = Router();
 
 router.use(checkJWT);
 
+router.route('/history').get(getCollections);
+
+router.route('/love').get(getLoveList);
+
 router
   .route('/:novelId')
   .post(updateCollection)
   .get(getCollection)
   .delete(deleteCollection);
-
-router.route('/history').get(getCollections);
-
-router.route('/love').get(getLoveList);
 
 export default router;
