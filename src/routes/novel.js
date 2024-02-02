@@ -21,15 +21,12 @@ import { updateReview } from '../controllers/review/updateReview.js';
 import { deleteReview } from '../controllers/review/deleteReview.js';
 const router = Router();
 
-router.route('/').get(getNovelList);
-router.route('/top-10-view').get(getTop10View);
-router.route('/moi-ra-lo').get(getNewChapterList);
-router.route('/top-10-finished').get(getTop10Finished);
-router.route('/top-10-newest').get(getTop10Newest);
+router.route('/').get(getNovel);
+router.route('/chapter').get(getChapter);
 //get a novel
 router.route('/:novelId').get(getNovelById);
 //get Chapter
-router.route('/:slugNovel/:slugChapter').get(getChapterBySlug);
+
 router.route('/:novelId/chapterList').get(getChapterList);
 //get review List
 router.route('/:novelId/review').get(getReviewList);
@@ -56,6 +53,7 @@ router.patch(
 );
 router.delete('/:novelId', deleteNovel);
 
+router.use(checkJWT);
 //post a review
 router.route('/:novelId/review').post(createReview);
 

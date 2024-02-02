@@ -17,6 +17,7 @@ export const getCollections = async (req, res, next) => {
 
     res.status(200).json({
       status: 'success',
+      length: collection.length,
       collection,
     });
   } catch (error) {
@@ -39,6 +40,7 @@ export const getLoveList = async (req, res, next) => {
 
     res.status(200).json({
       status: 'success',
+      length: loveList.length,
       loveList,
     });
   } catch (error) {

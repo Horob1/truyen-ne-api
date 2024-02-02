@@ -11,7 +11,8 @@ export const updateNovel = async (req, res, next) => {
       return res.status(404).json({ status: 'permission denied' });
     }
 
-    const { name, description, photo, categories, coverImg } = req.body;
+    const { name, description, photo, categories, coverImg } =
+      req.body;
 
     let author = req.body.author;
 
