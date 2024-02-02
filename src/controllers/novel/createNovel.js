@@ -17,18 +17,25 @@ export const createNovel = async (req, res) => {
       author,
     });
 
-    // Kiểm tra xem có file avatar được upload không
-    if (req.files && req.files.length === 2) {
-      // Nếu có, thực hiện upload ảnh cover và photo lên Cloudinary
-      const coverImg = await cloudinary.uploader.upload(req.files[0].path, {
-        folder: 'coverImg',
-      });
-      const photo = await cloudinary.uploader.upload(req.files[1].path, {
-        folder: 'photo',
-      });
-
-      // Cập nhật URL ảnh vào đối tượng Novel
+    // Kiểm tra xem có file coverImg được upload không
+    if (req.files['coverImg']) {
+      const coverImg = await cloudinary.uploader.upload(
+        req.files['coverImg'][0].path,
+        {
+          folder: 'Data/coverImg',
+        }
+      );
       newNovel.coverImg = coverImg.secure_url;
+    }
+
+    // Kiểm tra xem có file photo được upload không
+    if (req.files['photo']) {
+      const photo = await cloudinary.uploader.upload(
+        req.files['photo'][0].path,
+        {
+          folder: 'Data/photo',
+        }
+      );
       newNovel.photo = photo.secure_url;
     }
 
