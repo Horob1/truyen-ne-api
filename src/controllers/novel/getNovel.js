@@ -6,7 +6,9 @@ export const getNovel = async (req, res, next) => {
     //TODO:
     const features = new APIFeatures(Novel.find(), req.query);
     features.filter().paginate().sort().limitFields();
-    const novels = await features.data;
+    const novels = await features.data
+      .populate({ path: 'translator' })
+      .populate({ path: 'categories' });
 
     res.status(200).json({
       status: 'success',
