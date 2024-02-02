@@ -28,7 +28,7 @@ const novelSchema = new mongoose.Schema(
     },
     photo: {
       type: String,
-      default: '',
+      default: process.env.PHOTO_NOVEL_DF,
     },
     translator: {
       type: mongoose.Schema.ObjectId,
@@ -55,11 +55,11 @@ const novelSchema = new mongoose.Schema(
     },
     love: {
       type: Number,
-      default: 0,
+      default: '',
     },
     coverImg: {
       type: String,
-      default: '',
+      default: process.env.COVERIMG_NOVEL_DF,
     },
     slug: {
       type: String,

@@ -15,7 +15,7 @@ import collectionRouter from './routes/collection.js';
 import commentRouter from './routes/comment.js';
 import { Server as socketIo } from 'socket.io';
 import http from 'http';
-import configureCloudinary from './configCloud.js';
+import { configureCloudinary } from './configCloud.js';
 
 configureCloudinary();
 const app = express();

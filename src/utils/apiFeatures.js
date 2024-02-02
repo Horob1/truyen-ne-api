@@ -1,3 +1,5 @@
+export const LIMIT = 10;
+
 class APIFeatures {
   constructor(data, query) {
     this.data = data;

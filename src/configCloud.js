@@ -1,11 +1,13 @@
-import cloudinary from 'cloudinary';
+import { v2 as cloudinary } from 'cloudinary';
+import dotenv from 'dotenv';
 
-const configureCloudinary = () => {
+dotenv.config({ path: './src/config.env' });
+
+export const configureCloudinary = () => {
   cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET,
+    cloud_name: 'dlunbu0qm',
+    api_key: '187476356594955',
+    api_secret: 'tmJHgIJ5UKo2fOP9_X4vK0ls8ec',
   });
+  return cloudinary;
 };
-
-export default configureCloudinary;
