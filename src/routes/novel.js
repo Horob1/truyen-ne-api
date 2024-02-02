@@ -49,10 +49,24 @@ router.route('/:novelId/review').get(getReviewList);
 router.route('/:novelId/:chapterId').get(checkUser, getChapter);
 //admin or translator
 router.use(checkJWT, rejectUser);
+router.post(
+  '/',
+  upload.fields([
+    { name: 'coverImg', maxCount: 1 },
+    { name: 'photo', maxCount: 1 },
+  ]),
+  createNovel
+);
 
-router.route('/').post(createNovel);
-
-router.route('/:novelId').patch(updateNovel).delete(deleteNovel);
+router.patch(
+  '/:novelId',
+  upload.fields([
+    { name: 'coverImg', maxCount: 1 },
+    { name: 'photo', maxCount: 1 },
+  ]),
+  updateNovel
+);
+router.delete('/:novelId', deleteNovel);
 
 //post a review
 router.route('/:novelId/review').post(createReview);
