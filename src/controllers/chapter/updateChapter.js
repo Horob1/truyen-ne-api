@@ -25,7 +25,9 @@ export const updateChapter = async (req, res, next) => {
     );
 
     if (!chapter) {
-      res.status(404).json({ status: 'fail', message: 'something was wrong' });
+      return res
+        .status(404)
+        .json({ status: 'fail', message: 'something was wrong' });
     }
 
     chapter = await Chapter.findById(req.params.chapterId);

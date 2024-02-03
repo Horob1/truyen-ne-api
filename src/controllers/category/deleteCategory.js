@@ -11,7 +11,7 @@ export const deleteCategory = async (req, res, nexy) => {
       { new: true }
     );
 
-    res.status(205).json({});
+    res.status(200).json({ message: 'Deleted' });
   } catch (error) {
     res.status(500).json(error);
   }

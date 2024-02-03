@@ -5,14 +5,13 @@ export const updateNovel = async (req, res, next) => {
   try {
     const user = await Novel.findById(req.params.novelId);
 
-    const translatorId = user.translator.id;
+    const translatorId = user.translator.toString();
 
     if (req.user.id !== translatorId) {
       return res.status(404).json({ status: 'permission denied' });
     }
 
-    const { name, description, photo, categories, coverImg } =
-      req.body;
+    const { name, description, photo, categories, coverImg } = req.body;
 
     let author = req.body.author;
 

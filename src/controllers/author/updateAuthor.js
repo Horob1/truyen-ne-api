@@ -4,12 +4,19 @@ export const updateAuthor = async (req, res, next) => {
   try {
     const { name, birthday, description, avatar } = req.body;
 
-    const author = await Author.findByIdAndUpdate(req.params.authorId, {
-      name,
-      birthday,
-      description,
-      avatar,
-    });
+    const author = await Author.findByIdAndUpdate(
+      req.params.authorId,
+      {
+        name,
+        birthday,
+        description,
+        avatar,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
 
     if (!author)
       return res

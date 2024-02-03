@@ -22,7 +22,7 @@ export const deleteNovel = async (req, res, next) => {
 
     await Novel.findByIdAndDelete(req.params.novelId);
 
-    res.status(205).json({
+    res.status(200).json({
       status: 'success',
     });
   } catch (err) {
