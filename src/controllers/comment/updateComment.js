@@ -4,7 +4,7 @@ export const updateComment = async (req, res, next) => {
   try {
     const user = await Comment.findById(req.params.commentId).select('user');
 
-    if (req.user.id !== user.id)
+    if (req.user.id !== user.user.id)
       return res
         .status(404)
         .json({ status: 'fail', message: 'Permission denied' });
@@ -19,7 +19,7 @@ export const updateComment = async (req, res, next) => {
       {
         new: true,
         runValidators: true,
-      },
+      }
     );
 
     res.status(201).json({
@@ -27,6 +27,6 @@ export const updateComment = async (req, res, next) => {
       comment,
     });
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
   }
 };

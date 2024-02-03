@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
@@ -9,16 +10,28 @@ import novelRouter from './routes/novel.js';
 import authorRouter from './routes/author.js';
 import categoryRouter from './routes/category.js';
 import collectionRouter from './routes/collection.js';
-import searchRouter from './routes/search.js';
-import forumRouter from './routes/forum.js';
+// import searchRouter from './routes/search.js';
+// import forumRouter from './routes/forum.js';
 import commentRouter from './routes/comment.js';
 import { Server as socketIo } from 'socket.io';
 import http from 'http';
+import { configureCloudinary } from './configCloud.js';
 
+configureCloudinary();
 const app = express();
 const server = http.createServer(app);
 const io = new socketIo(server);
 app.use(cookieParser());
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});
+
+app.use(cors({ origin: 'http://localhost:5173', optionsSuccessStatus: 200 }));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -66,8 +79,8 @@ app.use('/api/novel', novelRouter);
 app.use('/api/author', authorRouter);
 app.use('/api/category', categoryRouter);
 app.use('/api/collection', collectionRouter);
-app.use('api/forum', forumRouter);
-app.use('api/search', searchRouter);
-app.use('api/comment', commentRouter);
+// app.use('api/forum', forumRouter);
+// app.use('api/search', searchRouter);
+app.use('/api/comment', commentRouter);
 
 export { app, server, io };

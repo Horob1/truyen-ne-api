@@ -1,20 +1,22 @@
 import mongoose from 'mongoose';
+import removeAccents from './../utils/removeAccents.js';
 
 const novelSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: [true, 'Novel must have a name!'],
+      trim: true,
     },
     description: {
       type: String,
       default: 'Chưa có mô tả!',
+      trim: true,
     },
     createTime: {
       type: Date,
       default: Date.now,
     },
-    debutDate: Date,
     status: {
       type: String,
       enum: ['Bỏ dở', 'Chưa hoàn thành', 'Hoàn thành'],
@@ -26,16 +28,15 @@ const novelSchema = new mongoose.Schema(
     },
     photo: {
       type: String,
-      default: '',
+      default: process.env.PHOTO_NOVEL_DF,
     },
     translator: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
       required: [true, 'Novel must have a name!'],
     },
-    author: { type: mongoose.Schema.ObjectId, ref: 'translator' },
+    author: { type: mongoose.Schema.ObjectId, ref: 'Author' },
     categories: [{ type: mongoose.Schema.ObjectId, ref: 'Category' }],
-    reviews: [{ type: mongoose.Schema.ObjectId, ref: 'Review' }],
     reviewsQuan: {
       type: Number,
       default: 0,
@@ -54,33 +55,49 @@ const novelSchema = new mongoose.Schema(
     },
     love: {
       type: Number,
-      default: 0,
+      default: '',
     },
     coverImg: {
       type: String,
-      default: 0,
+      default: process.env.COVERIMG_NOVEL_DF,
+    },
+    slug: {
+      type: String,
+      unique: true,
     },
   },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  },
+  }
 );
 
-novelSchema.pre(/^find/, function(next) {
-  this.populate({
-    path: 'author',
-    select: 'name'
-  });
+// novelSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: 'author',
+//     select: 'name',
+//   });
 
-  next();
-});
+//   next();
+// });
 
-novelSchema.pre(/^find/, function(next) {
-  this.populate({
-    path: 'translator',
-    select: 'firstName lastName avatar'
-    });
+// novelSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: 'translator',
+//     select: 'firstName lastName avatar',
+//   });
+//   next();
+// });
+
+// novelSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: 'categories',
+//   });
+//   next();
+// });
+
+novelSchema.pre('save', function (next) {
+  this.slug = removeAccents(this.name.toLowerCase().split(' ').join('-'));
   next();
 });
 

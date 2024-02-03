@@ -1,16 +1,24 @@
 import mongoose from 'mongoose';
+import removeAccents from '../utils/removeAccents.js';
 
 const authorSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: [true, 'Author must have a name'],
+      trim: true,
     },
     birthday: Date,
-    description: String,
+    description: { type: String, trim: true },
     avatar: {
       type: String,
-      default: '',
+      default: function () {
+        return process.env.AVT_DF_URL;
+      },
+    },
+    slug: {
+      type: String,
+      unique: true,
     },
   },
   {
@@ -18,6 +26,11 @@ const authorSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+
+authorSchema.pre('save', function (next) {
+  this.slug = removeAccents(this.name.toLowerCase().split(' ').join('-'));
+  next();
+});
 
 const Author = mongoose.model('Author', authorSchema);
 

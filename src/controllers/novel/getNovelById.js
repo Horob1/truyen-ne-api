@@ -1,10 +1,8 @@
 import Novel from '../../models/novelModel.js';
-import Translator from '../../models/userModel.js';
 
 export const getNovelById = async (req, res, next) => {
   try {
-    let novel = await Novel.findById(req.params.novelId);
-    if (!novel) return res.status(404).json({ status: 'permission denied' });
+    const novel = await Novel.findById(req.params.novelId);
 
     res.status(200).json({
       status: 'success',

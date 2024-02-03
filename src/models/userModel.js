@@ -1,18 +1,18 @@
-import mongoose from "mongoose";
-import validator from "validator";
-import bcrypt from "bcrypt";
+import mongoose from 'mongoose';
+import validator from 'validator';
+import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      required: [true, "Please tell us your username!"],
+      required: [true, 'Please tell us your username!'],
       unique: true,
       trim: true,
     },
     firstName: {
       type: String,
-      required: [true, "Please tell us your first name!"],
+      required: [true, 'Please tell us your first name!'],
       trim: true,
     },
     lastName: {
@@ -21,27 +21,29 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: [true, "Please provide your email!"],
+      required: [true, 'Please provide your email!'],
       trim: true,
       unique: true,
       lowercase: true,
-      validate: [validator.isEmail, "Please provide a valid email!"],
+      validate: [validator.isEmail, 'Please provide a valid email!'],
     },
     role: {
       type: String,
-      enum: ["user", "translator", "admin"],
-      default: "user",
+      enum: ['user', 'translator', 'admin'],
+      default: 'user',
     },
     avatar: {
       type: String,
-      default: "",
+      default: function () {
+        return process.env.AVT_DF_URL;
+      },
     },
     password: {
       type: String,
-      required: [true, "Please provide a password!"],
+      required: [true, 'Please provide a password!'],
       validate: [
         validator.isStrongPassword,
-        "minLength: 8, maxLength: 16,minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1!",
+        'minLength: 8, maxLength: 16,minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1!',
       ],
     },
     passwordConfirm: {
@@ -52,8 +54,16 @@ const userSchema = new mongoose.Schema(
         validator: function (el) {
           return el === this.password;
         },
-        message: "Passwords are not same!",
+        message: 'Passwords are not same!',
       },
+    },
+    resetPasswordToken: {
+      type: String,
+      default: null,
+    },
+    resetPasswordExpires: {
+      type: Date,
+      default: null,
     },
     createTime: {
       type: Date,
@@ -66,9 +76,9 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-userSchema.pre("save", async function (next) {
+userSchema.pre('save', async function (next) {
   try {
-    if (!this.isModified("password")) return next();
+    if (!this.isModified('password')) return next();
 
     this.password = await bcrypt.hash(this.password, 12);
     this.passwordConfirm = undefined;
@@ -78,4 +88,4 @@ userSchema.pre("save", async function (next) {
   }
 });
 
-export default mongoose.model("User", userSchema);
+export default mongoose.model('User', userSchema);

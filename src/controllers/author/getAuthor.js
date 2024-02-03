@@ -1,20 +1,15 @@
 import Author from '../../models/authorModel.js';
-import Novel from '../../models/novelModel.js';
+import APIFeatures from '../../utils/apiFeatures.js';
 
 export const getAuthor = async (req, res, next) => {
   try {
-    const author = await Author.findById(req.params.authorId);
-
-    if (!author)
-      res.status(404).json({ status: 'fail', message: 'something was wrong' });
-
-    //query novel of author
-    const novels = await Novel.find({ author: req.params.authorId });
-
-    author.novels = novels;
+    const features = new APIFeatures(Author.find(), req.query);
+    features.filter().paginate().sort().limitFields();
+    const author = await features.data;
 
     res.status(200).json({
       status: 'success',
+      length: author.length,
       author,
     });
   } catch (error) {

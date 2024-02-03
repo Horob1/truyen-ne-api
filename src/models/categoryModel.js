@@ -2,8 +2,8 @@ import mongoose from 'mongoose';
 
 const categorySchema = new mongoose.Schema(
   {
-    name: String,
-    description: String,
+    name: { type: String, trim: true },
+    description: { type: String, trim: true },
   },
   {
     toJSON: { virtuals: true },

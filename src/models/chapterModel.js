@@ -5,6 +5,7 @@ const chapterSchema = new mongoose.Schema(
     name: {
       type: String,
       required: [true, 'This chapter must have a name!'],
+      trim: true,
     },
     number: {
       type: Number,
@@ -13,6 +14,7 @@ const chapterSchema = new mongoose.Schema(
     content: {
       type: String,
       required: [true, 'his chapter must have content!'],
+      trim: true,
     },
     watch: {
       type: Number,
@@ -24,12 +26,20 @@ const chapterSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    slug: {
+      type: String,
+    },
   },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
   }
 );
+
+chapterSchema.pre('save', function (next) {
+  this.slug = `chuong-${this.number}`;
+  next();
+});
 
 const Chapter = mongoose.model('Chapter', chapterSchema);
 

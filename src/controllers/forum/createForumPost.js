@@ -1,20 +1,20 @@
-import Forum from '../../models/forumModel.js';
+// import Forum from '../../models/forumModel.js';
 
-export const createForumPost = async (req, res, next) => {
-  try {
-    const { heading, content, novel, chapter } = req.body;
+// export const createForumPost = async (req, res, next) => {
+//   try {
+//     const { heading, content, novel, chapter } = req.body;
 
-    const auth = req.user.id;
+//     const auth = req.user.id;
 
-    const forumPost = new Forum({ heading, content, novel, chapter, auth });
+//     const forumPost = new Forum({ heading, content, novel, chapter, auth });
 
-    await forumPost.save();
+//     await forumPost.save();
 
-    res.status(201).json({
-      status: 'success',
-      forumPost,
-    });
-  } catch (error) {
-    res.status(500).json(err);
-  }
-};
+//     res.status(201).json({
+//       status: 'success',
+//       forumPost,
+//     });
+//   } catch (error) {
+//     res.status(500).json(error);
+//   }
+// };

@@ -4,7 +4,12 @@ export const createAuthor = async (req, res, next) => {
   try {
     const { name, birthday, description, avatar } = req.body;
 
-    const author = new Author({ name, birthday, description, avatar });
+    const author = new Author({
+      name,
+      birthday,
+      description,
+      avatar,
+    });
 
     await author.save();
 

@@ -1,5 +1,5 @@
 import User from '../../../models/userModel.js';
-
+import { v2 as cloudinary } from 'cloudinary';
 export const register = async (req, res) => {
   try {
     const { username, firstName, lastName, email, password, passwordConfirm } =
@@ -14,8 +14,13 @@ export const register = async (req, res) => {
       passwordConfirm,
     });
 
-    await user.save();
+    if (req.file) {
+      const avatar = await cloudinary.uploader.upload(req.file.path);
+      user.avatar = avatar.secure_url;
+    }
 
+    await user.save();
+    console.log(user);
     res.status(201).json({
       status: 'Registration Successful',
     });

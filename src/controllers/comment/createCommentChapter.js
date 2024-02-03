@@ -1,24 +1,20 @@
+import Chapter from '../../models/chapterModel.js';
 import Comment from '../../models/commentModel.js';
 
 export const createCommentChapter = async (req, res, next) => {
   try {
-    const { content, reply } = req.body;
+    const { content } = req.body;
 
     const user = req.user.id;
-    let isReply = false;
 
     const chapter = req.params.chapterId;
-
-    if (reply) {
-      isReply = true;
-    }
+    if (!(await Chapter.findById(chapter)))
+      return res.status(404).json({ status: 'ko có truyện này' });
 
     const comment = new Comment({
       content,
       user,
-      reply,
       chapter,
-      isReply,
     });
 
     await comment.save();
@@ -28,6 +24,6 @@ export const createCommentChapter = async (req, res, next) => {
       comment,
     });
   } catch (error) {
-    res.status(500).json(err);
+    res.status(500).json(error);
   }
 };
