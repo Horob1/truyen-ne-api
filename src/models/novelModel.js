@@ -72,14 +72,14 @@ const novelSchema = new mongoose.Schema(
   }
 );
 
-novelSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: 'author',
-    select: 'name',
-  });
+// novelSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: 'author',
+//     select: 'name',
+//   });
 
-  next();
-});
+//   next();
+// });
 
 // novelSchema.pre(/^find/, function (next) {
 //   this.populate({

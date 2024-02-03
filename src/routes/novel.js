@@ -18,7 +18,7 @@ import { updateNovel } from '../controllers/novel/updateNovel.js';
 import { deleteNovel } from '../controllers/novel/deleteNovel.js';
 import { createReview } from '../controllers/review/createReview.js';
 import { updateReview } from '../controllers/review/updateReview.js';
-import { deleteReview } from '../controllers/review/deleteReview.js';
+import { upload } from '../storage/storageImage.js';
 const router = Router();
 
 router.route('/').get(getNovel);
@@ -31,7 +31,6 @@ router.route('/:novelId/chapterList').get(getChapterList);
 //get review List
 router.route('/:novelId/review').get(getReviewList);
 
-router.route('/:novelId/:chapterId').get(checkUser, getChapter);
 //admin or translator
 router.use(checkJWT, rejectUser);
 router.post(
@@ -57,10 +56,7 @@ router.use(checkJWT);
 //post a review
 router.route('/:novelId/review').post(createReview);
 
-router
-  .route('/:novelId/review/:reviewId')
-  .patch(updateReview)
-  .delete(deleteReview);
+router.route('/:novelId/review/:reviewId').patch(updateReview);
 //admin or translator
 router.use(rejectUser);
 

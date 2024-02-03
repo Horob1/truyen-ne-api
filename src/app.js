@@ -81,6 +81,6 @@ app.use('/api/category', categoryRouter);
 app.use('/api/collection', collectionRouter);
 // app.use('api/forum', forumRouter);
 // app.use('api/search', searchRouter);
-app.use('api/comment', commentRouter);
+app.use('/api/comment', commentRouter);
 
 export { app, server, io };
