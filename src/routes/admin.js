@@ -10,6 +10,6 @@ const router = Router();
 router.get('/list', checkJWT, checkAdminRole, listUser);
 router.get('/user-info/:id', checkJWT, checkAdminRole, getUserInfo);
 router.delete('/delete/:id', checkJWT, checkAdminRole, deleteUser);
-router.update('/update/:id', checkJWT, checkAdminRole, updateUser);
+router.patch('/update/:id', checkJWT, checkAdminRole, updateUser);
 
 export default router;
