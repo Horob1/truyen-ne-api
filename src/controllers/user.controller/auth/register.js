@@ -20,7 +20,6 @@ export const register = async (req, res) => {
     }
 
     await user.save();
-    console.log(user);
     res.status(201).json({
       status: 'Registration Successful',
     });

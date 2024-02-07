@@ -4,8 +4,8 @@ export const getChapterList = async (req, res, next) => {
   try {
     const novel = req.params.novelId;
     const chapterList = await Chapter.find({ novel: novel })
-      .sort('number');
-
+      .sort('number')
+      .select('-content');
     res.status(200).json({
       status: 'success',
       chapterList,

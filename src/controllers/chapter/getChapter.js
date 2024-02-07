@@ -10,7 +10,7 @@ export const getChapter = async (req, res, next) => {
         path: 'translator',
         select: 'firstName lastName',
       })
-      .populate({ path: 'novel', select: 'name author slug' });
+      .populate({ path: 'novel', select: 'name author slug categories' });
     res.status(200).json({
       status: 'success',
       length: chapter.length,

@@ -20,7 +20,7 @@ export const getChapterCommentList = async (req, res, next) => {
   try {
     const commentList = await Comment.find({
       chapter: req.params.chapterId,
-    });
+    }).sort('-createTime');
 
     res.status(200).json({
       status: 'success',

@@ -30,7 +30,11 @@ router.route('/:novelId').get(getNovelById);
 router.route('/:novelId/chapterList').get(getChapterList);
 //get review List
 router.route('/:novelId/review').get(getReviewList);
+router.use(checkJWT);
+//post a review
+router.route('/:novelId/review').post(createReview);
 
+router.route('/:novelId/review/:reviewId').patch(updateReview);
 //admin or translator
 router.use(checkJWT, rejectUser);
 router.post(
@@ -52,11 +56,6 @@ router.patch(
 );
 router.delete('/:novelId', deleteNovel);
 
-router.use(checkJWT);
-//post a review
-router.route('/:novelId/review').post(createReview);
-
-router.route('/:novelId/review/:reviewId').patch(updateReview);
 //admin or translator
 router.use(rejectUser);
 

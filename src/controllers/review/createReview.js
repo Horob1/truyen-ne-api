@@ -8,7 +8,10 @@ export const createReview = async (req, res, next) => {
 
     const user = req.user.id;
     const review = new Review({ content, user, novel, rate });
-    await review.save();
+    (await review.save()).populate({
+      path: 'user',
+      select: 'username firstName lastName',
+    });
 
     const thisNovel = await Novel.findByIdAndUpdate(
       novel,
@@ -32,6 +35,7 @@ export const createReview = async (req, res, next) => {
       review,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json(error);
   }
 };

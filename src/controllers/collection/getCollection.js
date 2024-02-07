@@ -4,8 +4,8 @@ export const getCollection = async (req, res, next) => {
   try {
     const collection = await Collection.findOne({
       user: req.user.id,
-      novel: req.params.novelId
-    });
+      novel: req.params.novelId,
+    }).populate({ path: 'chapter' });
 
     res.status(200).json({
       status: 'success',
