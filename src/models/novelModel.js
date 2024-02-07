@@ -36,7 +36,7 @@ const novelSchema = new mongoose.Schema(
       required: [true, 'Novel must have a name!'],
     },
     author: { type: mongoose.Schema.ObjectId, ref: 'Author' },
-    categories: [{ type: mongoose.Schema.ObjectId, ref: 'Category' }],
+    categories: { type: mongoose.Schema.ObjectId, ref: 'Category' },
     reviewsQuan: {
       type: Number,
       default: 0,
