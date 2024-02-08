@@ -31,7 +31,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use(cors({ origin: '*', optionsSuccessStatus: 200 }));
+app.use(cors({ origin: process.env.FE_DOMAIN, optionsSuccessStatus: 200 }));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
