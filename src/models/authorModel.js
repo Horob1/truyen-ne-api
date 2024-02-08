@@ -32,6 +32,13 @@ authorSchema.pre('save', function (next) {
   next();
 });
 
+authorSchema.pre('findOneAndUpdate', function (next) {
+  this._update.slug = removeAccents(
+    this._update.name.toLowerCase().split(' ').join('-')
+  );
+  next();
+});
+
 const Author = mongoose.model('Author', authorSchema);
 
 export default Author;

@@ -7,10 +7,10 @@ import { updateCategory } from '../controllers/category/updateCategory.js';
 import { getCategories } from '../controllers/category/getCategories.js';
 
 const router = Router();
-
+router.route('/').get(getCategories);
 router.use(checkJWT, rejectUser);
 
-router.route('/').get(getCategories).post(createCategory);
+router.route('/').post(createCategory);
 
 router.route('/:categoryId').patch(updateCategory).delete(deleteCategory);
 
