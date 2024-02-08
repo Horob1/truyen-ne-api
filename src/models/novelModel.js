@@ -102,9 +102,10 @@ novelSchema.pre('save', function (next) {
 });
 
 novelSchema.pre('findOneAndUpdate', function (next) {
-  this._update.slug = removeAccents(
-    this._update.name.toLowerCase().split(' ').join('-')
-  );
+  if (this._update.name)
+    this._update.slug = removeAccents(
+      this._update.name.toLowerCase().split(' ').join('-')
+    );
   next();
 });
 

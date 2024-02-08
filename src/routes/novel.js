@@ -20,6 +20,7 @@ import { createReview } from '../controllers/review/createReview.js';
 import { updateReview } from '../controllers/review/updateReview.js';
 import { upload } from '../storage/storageImage.js';
 import { getMyNovel } from '../controllers/novel/getMyNovel.js';
+import { getChapterById } from '../controllers/chapter/getChapterById.js';
 const router = Router();
 router.route('/myNovel').get(checkJWT, rejectUser, getMyNovel);
 router.route('/').get(getNovel);
@@ -27,11 +28,12 @@ router.route('/chapter').get(getChapter);
 //get a novel
 router.route('/:novelId').get(getNovelById);
 //get Chapter
-
+router.route('/chapter/:chapterId').get(getChapterById);
 router.route('/:novelId/chapterList').get(getChapterList);
 //get review List
 router.route('/:novelId/review').get(getReviewList);
 router.use(checkJWT);
+
 //post a review
 router.route('/:novelId/review').post(createReview);
 

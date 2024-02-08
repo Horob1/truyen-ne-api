@@ -11,7 +11,7 @@ export const updateNovel = async (req, res, next) => {
       return res.status(404).json({ status: 'permission denied' });
     }
 
-    const { name, description, photo, categories, coverImg } = req.body;
+    const { name, description, photo, categories, coverImg, status } = req.body;
 
     let author = req.body.author;
 
@@ -22,6 +22,7 @@ export const updateNovel = async (req, res, next) => {
     let novel = await Novel.findByIdAndUpdate(
       req.params.novelId,
       {
+        status,
         name,
         description,
         photo,
@@ -41,7 +42,7 @@ export const updateNovel = async (req, res, next) => {
         .json({ status: 'fail', message: 'something was wrong' });
 
     // Kiểm tra xem có file coverImg được upload không
-    if (req.files['coverImg']) {
+    if (req.files && req.files['coverImg']) {
       const coverImg = await cloudinary.uploader.upload(
         req.files['coverImg'][0].path,
         {
@@ -52,18 +53,7 @@ export const updateNovel = async (req, res, next) => {
     }
 
     // Kiểm tra xem có file photo được upload không
-    if (req.files['photo']) {
-      const photo = await cloudinary.uploader.upload(
-        req.files['photo'][0].path,
-        {
-          folder: 'Data/photo',
-        }
-      );
-      novel.photo = photo.secure_url;
-    }
-
-    // Kiểm tra xem có file photo được upload không
-    if (req.files['photo']) {
+    if (req.files && req.files['photo']) {
       const photo = await cloudinary.uploader.upload(
         req.files['photo'][0].path,
         {

@@ -3,7 +3,7 @@ import { generateAccessToken } from './generateAccessToken.js';
 let refreshTokens = [];
 
 export const requestRefreshToken = async (req, res) => {
-  const refreshToken = req.cookies.refreshToken;
+  const refreshToken = req.body.refreshToken;
   if (!refreshToken) return res.status(401).json("You're not authenticated");
   if (!refreshToken.includes(refreshToken)) {
     return res.status(403).json('Token is not valid');

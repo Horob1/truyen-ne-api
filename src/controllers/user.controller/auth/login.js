@@ -21,14 +21,6 @@ export const loginUser = async (req, res) => {
       const refreshToken = generateRefreshToken(user);
 
       refreshTokens.push(refreshToken);
-      debugger;
-      res.cookie('user', 'john_doe', { maxAge: 3600000, httpOnly: true });
-      res.cookie('refreshToken', refreshToken, {
-        httpOnly: false,
-        secure: false,
-        path: '/',
-        sameSite: 'strict',
-      });
       const { password, ...others } = user._doc;
       res.status(200).json({ ...others, accessToken, refreshToken });
     }
