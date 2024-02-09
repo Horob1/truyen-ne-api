@@ -21,15 +21,8 @@ configureCloudinary();
 const app = express();
 const server = http.createServer(app);
 const io = new socketIo(server);
+app.use(cors({ credentials: true, origin: true }));
 app.use(cookieParser());
-
-app.use(
-  cors({
-    origin: '*',
-    optionsSuccessStatus: 200,
-    credentials: true,
-  })
-);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
