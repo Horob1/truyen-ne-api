@@ -21,10 +21,12 @@ import { updateReview } from '../controllers/review/updateReview.js';
 import { upload } from '../storage/storageImage.js';
 import { getMyNovel } from '../controllers/novel/getMyNovel.js';
 import { getChapterById } from '../controllers/chapter/getChapterById.js';
+import { upViewChapter } from '../controllers/chapter/upViewChapter.js';
 const router = Router();
 router.route('/myNovel').get(checkJWT, rejectUser, getMyNovel);
 router.route('/').get(getNovel);
 router.route('/chapter').get(getChapter);
+router.route('/chapter/:chapterId').patch(upViewChapter);
 //get a novel
 router.route('/:novelId').get(getNovelById);
 //get Chapter
