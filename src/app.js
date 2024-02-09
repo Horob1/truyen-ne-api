@@ -22,19 +22,10 @@ const app = express();
 const server = http.createServer(app);
 const io = new socketIo(server);
 app.use(cookieParser());
-app.use(function (req, res, next) {
-  res.header({ 'Access-Control-Allow-Origin': '*' }, req.headers.origin);
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept',
-    { 'Access-Control-Allow-Credentials': true }
-  );
-  next();
-});
 
 app.use(
   cors({
-    origin: process.env.FE_DOMAIN,
+    origin: '*',
     optionsSuccessStatus: 200,
     credentials: true,
   })
