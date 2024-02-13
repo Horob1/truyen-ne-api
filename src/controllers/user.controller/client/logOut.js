@@ -2,7 +2,7 @@ let refreshTokens = [];
 
 export const logOut = async (req, res) => {
   try {
-    const { refreshToken } = req.cookies;
+    const { refreshToken } = req.body;
     if (!refreshToken) {
       return res.status(404).json('No refreshtoken found');
     }
